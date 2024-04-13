@@ -11,13 +11,14 @@ public class CrearTablero : MonoBehaviour
 
     void Awake()
     {
-        _tablero = Instantiate(tableroPrefab);
-        _tablero.transform.position = posicionCentralTablero;
-        _tablero.transform.LookAt(Camera.main.transform.position); 
+        //vacio
     }
 
     void Start ()
     {
+        _tablero = Instantiate(tableroPrefab);
+        _tablero.transform.position = posicionCentralTablero;
+        _tablero.transform.LookAt(Camera.main.transform.position);
     }
 
 
