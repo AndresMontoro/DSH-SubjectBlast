@@ -9,7 +9,7 @@ Juego desarrollado para la asignatura DSH tipo Candy Crush para móvil (en verti
 
 - Todos los niveles serán un **tablero de 7x7**.
 - Contará con **cuatro modos:**
-    - **Modo historia:** 
+    - **Modo historia:**
         - Diferentes niveles con diferentes requisitos y una historia en común. X ámbitos de la informática (conjunto de asignaturas).
         - En cada ámbito habrá un profesor característico que suelte fases "célebres".
         - Puntuación mínima necesaria si no te matriculas de nuevo (con seis asignaturas diferentes).
