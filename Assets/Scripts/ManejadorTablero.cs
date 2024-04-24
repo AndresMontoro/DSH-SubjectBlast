@@ -9,12 +9,15 @@ public class ManejadorTablero : MonoBehaviour
     public int maximoFilas;
     public int maximoColumn;
 
+    public float distanciaAlturaCentro = 5.0f;
+    public float distanciaAnchuraCentro = 5.0f;
+
     [Tooltip("Las fichas deben añadirse en este orden: ")]
     public GameObject[] arrayFichas;
 
     bool actualizandoTablero;
 
-    Transform[,] posicionesFichas;
+    GameObject[,] fichas;
 
     float _ladoCasilla;
 
@@ -79,6 +82,16 @@ public class ManejadorTablero : MonoBehaviour
     IEnumerator ActualizarTablero(Movimiento movimiento)
     {
         yield return null;
+    }
+
+    Movimiento obtenerJugada()
+    {
+        return new Movimiento();
+    }
+
+    bool evaluarJugada(Movimiento movimientoAcutal)
+    {
+        return false;
     }
 
     // Update is called once per frame
