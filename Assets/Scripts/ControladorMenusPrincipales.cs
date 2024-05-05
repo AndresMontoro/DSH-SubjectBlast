@@ -10,6 +10,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public Button modoHistoria;
     public GameObject mainMenu;
     public GameObject selectGameModes;
+    public GameObject selectYears;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         modoHistoria.onClick.AddListener(ShowLevels);
         mainMenu.SetActive(true);
         selectGameModes.SetActive(false);
+        selectYears.SetActive(false);
         Debug.Log("Start");
     }
 
@@ -37,5 +39,6 @@ public class ControladorMenusPrincipales : MonoBehaviour
     {
         Debug.Log("Show Levels");
         selectGameModes.SetActive(false);
+        selectYears.SetActive(true);
     }
 }
