@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoverSeleccionarNiveles : MonoBehaviour
 {
-    public float velocidadDesplazamiento = 0.0001f;
+    public float velocidadDesplazamiento = 0.5f;
     public float desplazamientoMaximo = 1.0f;
     private Vector2 posicionInicial;
 
@@ -16,22 +16,35 @@ public class MoverSeleccionarNiveles : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+{
+    if (Input.touchCount > 0)
     {
-        if (Input.touchCount > 0)
+        Touch touch = Input.GetTouch(0);
+        
+        if (touch.phase == TouchPhase.Began)
         {
-            Touch touch = Input.GetTouch(0);
+            posicionInicial = touch.position;
+        }
+        else if (touch.phase == TouchPhase.Moved)
+        {
+            Vector2 desplazamiento = touch.position - posicionInicial;
             
-            if (touch.phase == TouchPhase.Began)
-            {
-                posicionInicial = touch.position;
-            }
-            else if (touch.phase == TouchPhase.Moved)
-            {
-                Vector2 desplazamiento = touch.position - posicionInicial;
-                // float desplazamientoZ = desplazamiento.y * velocidadDesplazamiento;
-                float desplazamientoZ = Mathf.Clamp(-desplazamiento.y * velocidadDesplazamiento, -desplazamientoMaximo, desplazamientoMaximo);
-                transform.Translate(0, desplazamientoZ, desplazamientoZ);
-            }
+            // Limitar el movimiento solo en el eje Z (hacia delante o hacia atrás)
+            float desplazamientoZ = desplazamiento.y * velocidadDesplazamiento * Time.deltaTime;
+            desplazamientoZ = Mathf.Clamp(desplazamientoZ, -desplazamientoMaximo, desplazamientoMaximo);
+
+            // Obtener la dirección del movimiento en el espacio de la cámara
+            Vector3 direccionMovimiento = Camera.main.transform.forward * desplazamientoZ;
+            direccionMovimiento.y = 0; // Asegurar que el movimiento sea solo horizontal
+
+            // Mover la cámara
+            transform.position += direccionMovimiento;
         }
     }
+}
+
+
+
+
+
 }

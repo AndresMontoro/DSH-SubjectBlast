@@ -735,8 +735,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 198ec21da464e43418b41880b618c06e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadDesplazamiento: 0.1
-  desplazamientoMaximo: 1
+  velocidadDesplazamiento: 20
+  desplazamientoMaximo: 2
 --- !u!1 &617830919
 GameObject:
   m_ObjectHideFlags: 0
