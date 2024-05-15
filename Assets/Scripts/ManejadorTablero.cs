@@ -12,6 +12,9 @@ public class ManejadorTablero : MonoBehaviour
     public float distanciaAlturaCentro = 5.0f;
     public float distanciaAnchuraCentro = 5.0f;
 
+    int filai = -100, coli = -100, filaj = -100, colj = -100;
+    bool setedFich;
+
     [Tooltip("Las fichas deben añadirse en este orden: ")]
     public GameObject[] arrayFichas;
 
@@ -32,14 +35,52 @@ public class ManejadorTablero : MonoBehaviour
         FICHA_6
     }
 
-    struct Movimiento
-    {
-        public int filaOrigen, filaDestino, columnaOrigen, columnaDestino;
-        public Movimiento(int fO, int fD, int cO, int cD) { filaOrigen = fO; filaDestino = fD; columnaOrigen = cO; columnaDestino = cD; }
-    }
-
     //Matriz de NxN fichas.
     _ficha[,] matrizLogica;
+
+    void checkMovimiento()
+    {
+        if (Mathf.Abs(filai - filaj) == 1 ^ Mathf.Abs(coli - colj) == 1)
+        {
+            MoverFicha(filai, filaj, coli, colj);
+            filai = -100;
+            filaj = -100;
+            coli = -100;
+            colj = -100;
+        }
+        else
+        {
+            filai = -100;
+            filaj = -100;
+            coli = -100;
+            colj = -100;
+            setedFich = false;
+        }
+    }
+
+    public void Movimiento (int fila, int col)
+    {
+        if (setedFich)
+        {
+            filaj = fila;
+            colj = col;
+            checkMovimiento();
+        }
+        else
+        {
+            filai = fila;
+            coli = col;
+        }
+    }
+
+    void MoverFicha(int fila1, int col1, int fila2, int col2)
+    {
+        (matrizLogica[fila1, col1], matrizLogica[fila2, col2]) = (matrizLogica[fila2, col2], matrizLogica[fila1, col1]);
+        //IENUMERATOR que mueve visiblemente las fichas
+        (fichas[fila1, col1], fichas[fila2, col2]) = (fichas[fila2, col2], fichas[fila1, col1]);
+        fichas[fila1, col1].GetComponent<Ficha>().setPos(fila1, col1);
+        fichas[fila2, col2].GetComponent<Ficha>().setPos(fila2, col2);
+    }
 
     void IniciarMatriz()
     {
@@ -51,47 +92,15 @@ public class ManejadorTablero : MonoBehaviour
         //TODO
     }
 
-    void ObtenerPosicionesFichas()
-    {
-        //TODO
-    }
-
     void Awake()
     {
         IniciarMatriz();
-        ObtenerPosicionesFichas();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         PintarTablero();
-    }
-
-    IEnumerator MoverFichas (Movimiento movimiento)
-    {
-        yield return null;
-    }
-
-    _ficha GenerarFichas ()
-    {
-        //TODO
-        return _ficha.VACIO;
-    }
-
-    IEnumerator ActualizarTablero(Movimiento movimiento)
-    {
-        yield return null;
-    }
-
-    Movimiento obtenerJugada()
-    {
-        return new Movimiento();
-    }
-
-    bool evaluarJugada(Movimiento movimientoAcutal)
-    {
-        return false;
     }
 
     // Update is called once per frame
