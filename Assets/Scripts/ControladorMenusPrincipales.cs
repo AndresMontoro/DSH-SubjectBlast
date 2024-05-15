@@ -11,6 +11,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public GameObject mainMenu;
     public GameObject selectGameModes;
     public GameObject selectYears;
+    public GameObject undo;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         mainMenu.SetActive(true);
         selectGameModes.SetActive(false);
         selectYears.SetActive(false);
+        undo.SetActive(false);
         Debug.Log("Start");
     }
 
@@ -33,6 +35,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         Debug.Log("Play Game");
         mainMenu.SetActive(false);
         selectGameModes.SetActive(true);
+        undo.SetActive(true);
     }
 
     void ShowLevels()

@@ -1515,6 +1515,7 @@ MonoBehaviour:
   mainMenu: {fileID: 568877717}
   selectGameModes: {fileID: 589870491}
   selectYears: {fileID: 272238951}
+  undo: {fileID: 1099374834}
 --- !u!114 &621833297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1989,7 +1990,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 55.579544, y: 55.57953}
+  m_AnchoredPosition: {x: 55.57953, y: 55.57959}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1099374836
