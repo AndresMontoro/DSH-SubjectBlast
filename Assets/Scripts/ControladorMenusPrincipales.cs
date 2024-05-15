@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -12,6 +10,8 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public GameObject selectGameModes;
     public GameObject selectYears;
     public GameObject undo;
+    public Button[] optionButtons; // Array de botones para las opciones
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +21,21 @@ public class ControladorMenusPrincipales : MonoBehaviour
         selectGameModes.SetActive(false);
         selectYears.SetActive(false);
         undo.SetActive(false);
+
+        // Asignar eventos a los botones
+        for (int i = 0; i < optionButtons.Length; i++)
+        {
+            int optionIndex = i; // Guardar el valor de i para su uso en el evento
+            optionButtons[i].onClick.AddListener(() => LoadNextSceneWithOption(optionIndex + 1));
+        }
+
         Debug.Log("Start");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+    
     }
 
     void PlayGame()
@@ -43,5 +51,14 @@ public class ControladorMenusPrincipales : MonoBehaviour
         Debug.Log("Show Levels");
         selectGameModes.SetActive(false);
         selectYears.SetActive(true);
+    }
+
+    public void LoadNextSceneWithOption(int option)
+    {
+        // Guardar la opción seleccionada en PlayerPrefs
+        PlayerPrefs.SetInt("SelectedOption", option);
+        
+        // Cargar la siguiente escena
+        SceneManager.LoadScene("SeleccionarNiveles");
     }
 }

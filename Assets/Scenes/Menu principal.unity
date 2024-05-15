@@ -593,7 +593,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 354}
-  m_SizeDelta: {x: 520, y: 140}
+  m_SizeDelta: {x: 500, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &165353355
 MonoBehaviour:
@@ -1239,7 +1239,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 368}
+  m_AnchoredPosition: {x: 0, y: 370}
   m_SizeDelta: {x: 456.7146, y: 58.3097}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &603870955
@@ -1264,8 +1264,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: ccd6dab67250f5c4eae17d391aac48e7, type: 3}
-    m_FontSize: 50
-    m_FontStyle: 1
+    m_FontSize: 45
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 50
@@ -1516,6 +1516,12 @@ MonoBehaviour:
   selectGameModes: {fileID: 589870491}
   selectYears: {fileID: 272238951}
   undo: {fileID: 1099374834}
+  optionButtons:
+  - {fileID: 1415411497}
+  - {fileID: 1605760012}
+  - {fileID: 597212653}
+  - {fileID: 1712944873}
+  - {fileID: 1533556233}
 --- !u!114 &621833297
 MonoBehaviour:
   m_ObjectHideFlags: 0
