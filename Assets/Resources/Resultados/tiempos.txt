@@ -1,0 +1,5 @@
+Curso1: 0
+Curso2: 290,7009
+Curso3: 300
+Curso4: 294,4203
+Curso5: 300
