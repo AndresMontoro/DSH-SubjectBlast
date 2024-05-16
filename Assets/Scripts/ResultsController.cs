@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 public class ResultsController : MonoBehaviour
 {
-
     public Text TotalPointsLevel;
+    public Text Week;
+
     void Start()
     {
         int selectedWeek = PlayerPrefs.GetInt("SelectedWeek", 0);
         TotalPointsLevel.text = "0000";
+        Week.text = "Semana " + selectedWeek;
         //GuardarResultadoNivel(1, 3, 1000);
         //GuardarResultadoNivel(5, 6, 1500);
         //GuardarResultadosEnArchivo();
@@ -90,5 +92,11 @@ public class ResultsController : MonoBehaviour
                 Debug.Log(key + ": " + resultado);
             }
         }
+    }
+
+    // Llamado cuando el objeto está a punto de ser destruido
+    void OnDestroy()
+    {
+        GuardarResultadosEnArchivo();
     }
 }

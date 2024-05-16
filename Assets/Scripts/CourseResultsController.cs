@@ -12,8 +12,7 @@ public class CourseResultsController : MonoBehaviour
     void Start()
     {
         CargarResultadosDesdeArchivo();
-        Debug.Log("" + SumarResultadosCurso(1));
-        MostrarDatosGuardados();
+        //MostrarDatosGuardados();
         TotalPointsCourse.text = SumarResultadosCurso(2).ToString("0000");
     }
 

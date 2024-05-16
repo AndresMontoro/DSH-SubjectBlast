@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,27 +32,9 @@ public class SeleccionarNiveles : MonoBehaviour
     {
         // Recuperar la opción seleccionada desde PlayerPrefs
         int selectedOption = PlayerPrefs.GetInt("SelectedOption", 0);
-        
-        switch(selectedOption) {
-            case 1:
-                TitleText.text = "1ᵉʳ curso";
-                break;
-            case 2:
-                TitleText.text = "2º curso";
-                break;
-            case 3:
-                TitleText.text = "3ᵉʳ curso";
-                break;
-            case 4:
-                TitleText.text = "4º curso";
-                break;
-            case 5:
-                TitleText.text = "TFG";
-                break;
-            default:
-                TitleText.text = "Curso";
-                break;
-        }
+
+        // Actualizar el título de la escena
+        updateCourseTitle(selectedOption);
     }
 
     public void LoadNextSceneWithOption(int option)
@@ -98,8 +81,52 @@ public class SeleccionarNiveles : MonoBehaviour
         return resultadoTotal;
     }
 
+    public int getWeek(string week){
+
+        int numero = 0;
+        // Utilizamos una expresión regular para extraer el número
+        Match match = Regex.Match(week, @"\d+");
+
+        // Verificamos si se encontró un número en la cadena
+        if (match.Success)
+        {
+            // Convertimos el valor de la coincidencia a un número entero
+            numero = int.Parse(match.Value);
+        }
+
+        return numero;
+    }
+
     void LoadScene()
     {
-        Debug.Log("Cargando nivel: " + gameObject.name);
+        // Guardar la semana seleccionada en PlayerPrefs
+        int semana = getWeek(gameObject.name);
+        PlayerPrefs.SetInt("SelectedWeek", semana);
+
+        SceneManager.LoadScene("VisorNiveles");
+    }
+
+    public void updateCourseTitle(int selectedOption)
+    {
+        switch(selectedOption) {
+            case 1:
+                TitleText.text = "1ᵉʳ curso";
+                break;
+            case 2:
+                TitleText.text = "2º curso";
+                break;
+            case 3:
+                TitleText.text = "3ᵉʳ curso";
+                break;
+            case 4:
+                TitleText.text = "4º curso";
+                break;
+            case 5:
+                TitleText.text = "TFG";
+                break;
+            default:
+                TitleText.text = "Curso";
+                break;
+        }
     }
 }

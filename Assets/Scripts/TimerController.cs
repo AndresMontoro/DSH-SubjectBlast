@@ -115,7 +115,6 @@ public class TimerController : MonoBehaviour
         if(minutos < 0) minutos = 0;
         if(segundos < 0) segundos = 0;
         timerText.text = minutos.ToString("0") + ":" + segundos.ToString("00");
-        Debug.Log("Se ha actualizado el tiempo a " + timerText.text);
     }
 
     // Llamado cuando el objeto está a punto de ser destruido
