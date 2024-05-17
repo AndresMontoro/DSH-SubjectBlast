@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SeleccionarNiveles : MonoBehaviour
 {
+    public Button undo;
     public Text TitleText;
 
     void Update()
@@ -30,6 +31,8 @@ public class SeleccionarNiveles : MonoBehaviour
 
     void Start()
     {
+        undo.onClick.AddListener(GoBack);
+
         // Recuperar la opción seleccionada desde PlayerPrefs
         int selectedOption = PlayerPrefs.GetInt("SelectedOption", 0);
 
@@ -128,5 +131,10 @@ public class SeleccionarNiveles : MonoBehaviour
                 TitleText.text = "Curso";
                 break;
         }
+    }
+
+    public void GoBack()
+    {
+        SceneManager.LoadScene("Menu principal");
     }
 }

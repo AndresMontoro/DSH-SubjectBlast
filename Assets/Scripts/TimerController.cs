@@ -8,6 +8,7 @@ public class TimerController : MonoBehaviour
     private float[] tiemposCursos = new float[5]; // Array para almacenar los tiempos de cada curso
     private bool isTimerRunning = false; // Estado del temporizador
     private int cursoActualIndex; // Índice del curso actual
+    public Button undo;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class TimerController : MonoBehaviour
         EstablecerCursoActual(/*PlayerPrefs.GetInt("SelectedOption", 0);*/1);
         ActualizarTextoTemporizador(cursoActualIndex);
         ComenzarTemporizador();
+        undo.onClick.AddListener(GoBack);
     }
 
     void Update()
@@ -121,5 +123,11 @@ public class TimerController : MonoBehaviour
     void OnDestroy()
     {
         GuardarTiemposEnArchivo();
+    }
+
+    void GoBack()
+    {
+        GuardarTiemposEnArchivo();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("SeleccionarNiveles");
     }
 }
