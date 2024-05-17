@@ -73,10 +73,29 @@ public class ManejadorTablero : MonoBehaviour
         }
     }
 
+    IEnumerator movimientoViasual (GameObject ficha1, GameObject ficha2)
+    {
+        actualizandoTablero = true;
+        Vector3 pos1 = ficha1.GetComponent<Transform>().position;
+        Vector3 pos2 = ficha2.GetComponent<Transform>().position;
+        Vector3 posOrg1 = new Vector3(pos1.x, pos1.y, pos1.z);
+        Vector3 posOrg2 = new Vector3(pos2.x, pos2.y, pos2.z);
+        Vector3 dir1 = (posOrg2 - pos1) / 10;
+        Vector3 dir2 = (posOrg1 - pos2) / 10;
+        while (pos1 != posOrg2 && pos2 != posOrg1)
+        {
+            pos1 += dir1;
+            pos2 += dir2;
+            yield return new WaitForSeconds(.1f);
+        }
+        actualizandoTablero = false;
+    }
+
     void MoverFicha(int fila1, int col1, int fila2, int col2)
     {
         (matrizLogica[fila1, col1], matrizLogica[fila2, col2]) = (matrizLogica[fila2, col2], matrizLogica[fila1, col1]);
         //IENUMERATOR que mueve visiblemente las fichas
+        movimientoViasual(fichas[fila1,col1], fichas[fila2,col2]);
         (fichas[fila1, col1], fichas[fila2, col2]) = (fichas[fila2, col2], fichas[fila1, col1]);
         fichas[fila1, col1].GetComponent<Ficha>().setPos(fila1, col1);
         fichas[fila2, col2].GetComponent<Ficha>().setPos(fila2, col2);
