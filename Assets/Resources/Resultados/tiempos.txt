@@ -1,0 +1,5 @@
+Curso1: 0
+Curso2: 300
+Curso3: 300
+Curso4: 300
+Curso5: 300

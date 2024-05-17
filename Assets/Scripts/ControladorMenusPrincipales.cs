@@ -6,10 +6,10 @@ public class ControladorMenusPrincipales : MonoBehaviour
 {
     public Button playButton;
     public Button modoHistoria;
+    public Button undo;
     public GameObject mainMenu;
     public GameObject selectGameModes;
     public GameObject selectYears;
-    public GameObject undo;
     public Button[] optionButtons; // Array de botones para las opciones
 
     // Start is called before the first frame update
@@ -17,10 +17,12 @@ public class ControladorMenusPrincipales : MonoBehaviour
     {
         playButton.onClick.AddListener(PlayGame);
         modoHistoria.onClick.AddListener(ShowLevels);
+        undo.onClick.AddListener(GoBack);
         mainMenu.SetActive(true);
         selectGameModes.SetActive(false);
         selectYears.SetActive(false);
-        undo.SetActive(false);
+        undo.gameObject.SetActive(false);
+
 
         // Asignar eventos a los botones
         for (int i = 0; i < optionButtons.Length; i++)
@@ -43,7 +45,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         Debug.Log("Play Game");
         mainMenu.SetActive(false);
         selectGameModes.SetActive(true);
-        undo.SetActive(true);
+        undo.gameObject.SetActive(true);
     }
 
     void ShowLevels()
@@ -60,5 +62,20 @@ public class ControladorMenusPrincipales : MonoBehaviour
         
         // Cargar la siguiente escena
         SceneManager.LoadScene("SeleccionarNiveles");
+    }
+
+    public void GoBack()
+    {
+        if (selectGameModes.activeSelf)
+        {
+            mainMenu.SetActive(true);
+            selectGameModes.SetActive(false);
+            undo.gameObject.SetActive(false);
+        }
+        else if (selectYears.activeSelf)
+        {
+            selectGameModes.SetActive(true);
+            selectYears.SetActive(false);
+        }
     }
 }

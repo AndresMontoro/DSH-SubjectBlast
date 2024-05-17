@@ -1,52 +1,28 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultsController : MonoBehaviour
+public class CourseResultsController : MonoBehaviour
 {
-    public Text TotalPointsLevel;
-    public Text Week;
+    private List<string> cursoKeys = new List<string>();
+    public Text TotalPointsCourse;
 
+    // Start is called before the first frame update
     void Start()
     {
-        int selectedWeek = PlayerPrefs.GetInt("SelectedWeek", 0);
-        TotalPointsLevel.text = "0000";
-        Week.text = "Semana " + selectedWeek;
-        //GuardarResultadoNivel(1, 3, 1000);
-        //GuardarResultadoNivel(5, 6, 1500);
-        //GuardarResultadosEnArchivo();
-        //CargarResultadosDesdeArchivo();
+        CargarResultadosDesdeArchivo();
         //MostrarDatosGuardados();
+        TotalPointsCourse.text = SumarResultadosCurso(2).ToString("0000");
     }
 
-    public void GuardarResultadoNivel(int curso, int nivel, int resultado)
+    // Update is called once per frame
+    void Update()
     {
-        string key = "Curso" + curso + "Nivel" + nivel;
-        int existingResult = PlayerPrefs.GetInt(key, int.MaxValue); // Obtener el resultado existente o un valor máximo si no existe
-        if (resultado > existingResult)
-        {
-            PlayerPrefs.SetInt(key, resultado);
-        }
-        PlayerPrefs.Save();
+        
     }
 
-    public void GuardarResultadosEnArchivo()
-    {
-        string filePath = "Assets/Resources/Resultados/resultados.txt";
-        using (StreamWriter writer = new StreamWriter(filePath))
-        {
-            for (int curso = 1; curso <= 5; curso++)
-            {
-                for (int nivel = 1; nivel <= 7; nivel++)
-                {
-                    string key = "Curso" + curso + "Nivel" + nivel;
-                    int resultado = PlayerPrefs.GetInt(key, 0);
-                    writer.WriteLine(key + ": " + resultado);
-                }
-            }
-        }
-    }
-
+    // Función para cargar los resultados desde un archivo de texto
     public void CargarResultadosDesdeArchivo()
     {
         string filePath = "Assets/Resources/Resultados/resultados.txt";
@@ -54,6 +30,9 @@ public class ResultsController : MonoBehaviour
         // Verificar si el archivo existe
         if (File.Exists(filePath))
         {
+            // Limpiar la lista de claves
+            cursoKeys.Clear();
+
             // Leer todas las líneas del archivo
             string[] lines = File.ReadAllLines(filePath);
 
@@ -66,6 +45,9 @@ public class ResultsController : MonoBehaviour
                 int value;
                 if (int.TryParse(parts[1].Trim(), out value))
                 {
+                    // Agregar la clave a la lista de claves
+                    cursoKeys.Add(key);
+
                     // Guardar el valor en PlayerPrefs
                     PlayerPrefs.SetInt(key, value);
                 }
@@ -80,6 +62,25 @@ public class ResultsController : MonoBehaviour
         }
     }
 
+    // Función para sumar los resultados de un curso específico
+    public int SumarResultadosCurso(int curso)
+    {
+        int resultadoTotal = 0;
+
+        // Iterar sobre las claves asociadas a los resultados
+        foreach (var key in cursoKeys)
+        {
+            // Verificar si la clave corresponde al curso específico
+            if (key.StartsWith("Curso" + curso + "Nivel"))
+            {
+                // Sumar el valor asociado a la clave al resultado total
+                resultadoTotal += PlayerPrefs.GetInt(key);
+            }
+        }
+
+        return resultadoTotal;
+    }
+
     public void MostrarDatosGuardados()
     {
         Debug.Log("Datos guardados en PlayerPrefs:");
@@ -92,11 +93,5 @@ public class ResultsController : MonoBehaviour
                 Debug.Log(key + ": " + resultado);
             }
         }
-    }
-
-    // Llamado cuando el objeto está a punto de ser destruido
-    void OnDestroy()
-    {
-        GuardarResultadosEnArchivo();
     }
 }
