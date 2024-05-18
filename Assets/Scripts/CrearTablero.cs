@@ -18,7 +18,9 @@ public class CrearTablero : MonoBehaviour
     {
         _tablero = Instantiate(tableroPrefab);
         _tablero.transform.position = posicionCentralTablero;
-        _tablero.transform.LookAt(Camera.main.transform.position);
+
+        // Ejecutar esta linea provoca la creación del tablero en pendiente
+        /*_tablero.transform.LookAt(Camera.main.transform.position);*/
     }
 
 

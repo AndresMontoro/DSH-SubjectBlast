@@ -15,7 +15,7 @@ public class ManejadorTablero : MonoBehaviour
     int filai = -100, coli = -100, filaj = -100, colj = -100;
     bool setedFich;
 
-    [Tooltip("Las fichas deben añadirse en este orden: ")]
+    [Tooltip("Las fichas deben aï¿½adirse en este orden: ")]
     public GameObject[] arrayFichas;
 
     bool actualizandoTablero;
@@ -73,7 +73,7 @@ public class ManejadorTablero : MonoBehaviour
         }
     }
 
-    IEnumerator movimientoViasual (GameObject ficha1, GameObject ficha2)
+    IEnumerator movimientoVisual (GameObject ficha1, GameObject ficha2)
     {
         actualizandoTablero = true;
         Vector3 pos1 = ficha1.GetComponent<Transform>().position;
@@ -95,7 +95,7 @@ public class ManejadorTablero : MonoBehaviour
     {
         (matrizLogica[fila1, col1], matrizLogica[fila2, col2]) = (matrizLogica[fila2, col2], matrizLogica[fila1, col1]);
         //IENUMERATOR que mueve visiblemente las fichas
-        movimientoViasual(fichas[fila1,col1], fichas[fila2,col2]);
+        movimientoVisual(fichas[fila1,col1], fichas[fila2,col2]);
         (fichas[fila1, col1], fichas[fila2, col2]) = (fichas[fila2, col2], fichas[fila1, col1]);
         fichas[fila1, col1].GetComponent<Ficha>().setPos(fila1, col1);
         fichas[fila2, col2].GetComponent<Ficha>().setPos(fila2, col2);

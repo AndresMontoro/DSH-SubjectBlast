@@ -82,7 +82,7 @@ public class MovSpriteProfesor : MonoBehaviour
         audioSource.clip = clip;
         audioSource.Play();
         dialogueBox.SetActive(true);
-        yield return new WaitForSeconds(clip.length);
+        yield return new WaitForSeconds(clip.length+0.5f);
         dialogueBox.SetActive(false);
         isTalking = false;
     }
