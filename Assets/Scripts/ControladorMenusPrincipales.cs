@@ -30,7 +30,6 @@ public class ControladorMenusPrincipales : MonoBehaviour
         undo.gameObject.SetActive(false);
         multiplayer.SetActive(false);
 
-
         // Asignar eventos a los botones
         for (int i = 0; i < optionButtons.Length; i++)
         {
