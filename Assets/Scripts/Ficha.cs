@@ -11,6 +11,9 @@ public class Ficha : MonoBehaviour
         fila = f;
         col = c;
     }
+    public int getFila() { return fila; }
+    public int getCol() { return col; }
+
     // Start is called before the first frame update
     void Start()
     {
