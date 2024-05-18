@@ -81,7 +81,7 @@ public class ManejadorTablero : MonoBehaviour
         }
     }
 
-    IEnumerator movimientoVisual (GameObject ficha1, GameObject ficha2)
+    IEnumerator movimientoVisual (GameObject ficha1, GameObject ficha2) { yield return new WaitForSeconds(1f);}
     IEnumerator movimientoVisual (GameObject[] param)
     {
         Vector3 pos1 = param[0].GetComponent<Transform>().position;

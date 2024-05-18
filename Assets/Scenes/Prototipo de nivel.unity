@@ -124,60 +124,6 @@ NavMeshSettings:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &136806616
---- !u!1 &602437343
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 602437345}
-  - component: {fileID: 602437344}
-  m_Layer: 0
-  m_Name: Manejador
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &602437344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602437343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae283b6120ba70541b8530cdacc67989, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximoFilas: 7
-  maximoColumn: 7
-  puntosParaDar: 5
-  puntosTotales: 0
-  distanciaAlturaCentro: 5
-  distanciaAnchuraCentro: 5
-  arrayFichas:
-  - {fileID: 919132149155446097, guid: 7cdd1307334b08d4dba1687e74ea3a1d, type: 3}
-  - {fileID: 919132149155446097, guid: 785ba1cd8b50f3b45a6015196be3cf8f, type: 3}
---- !u!4 &602437345
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602437343}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &654925853
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +132,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 136806617}
-  - component: {fileID: 136806623}
-  - component: {fileID: 136806622}
   - component: {fileID: 136806621}
-  - component: {fileID: 136806620}
+  - component: {fileID: 136806623}
   - component: {fileID: 136806619}
+  - component: {fileID: 136806622}
   - component: {fileID: 136806618}
+  - component: {fileID: 136806620}
   m_Layer: 0
   m_Name: Quad_DLH
   m_TagString: Untagged
@@ -1810,6 +1756,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553103868}
   m_CullTransparentMesh: 1
+--- !u!1 &602437343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 602437345}
+  - component: {fileID: 602437344}
+  m_Layer: 0
+  m_Name: Manejador
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &602437344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602437343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae283b6120ba70541b8530cdacc67989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maximoFilas: 7
+  maximoColumn: 7
+  puntosParaDar: 5
+  puntosTotales: 0
+  distanciaAlturaCentro: 5
+  distanciaAnchuraCentro: 5
+  arrayFichas:
+  - {fileID: 919132149155446097, guid: 7cdd1307334b08d4dba1687e74ea3a1d, type: 3}
+  - {fileID: 919132149155446097, guid: 785ba1cd8b50f3b45a6015196be3cf8f, type: 3}
+--- !u!4 &602437345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602437343}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &642416211
 GameObject:
   m_ObjectHideFlags: 0
