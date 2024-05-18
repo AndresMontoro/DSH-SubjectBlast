@@ -128,6 +128,6 @@ public class TimerController : MonoBehaviour
     void GoBack()
     {
         GuardarTiemposEnArchivo();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SeleccionarNiveles");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("SeleccionarNiveles" + PlayerPrefs.GetInt("SelectedOption", 1));
     }
 }
