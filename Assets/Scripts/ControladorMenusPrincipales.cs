@@ -7,9 +7,14 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public Button playButton;
     public Button modoHistoria;
     public Button undo;
+    public Button modoMultijugador;
+    public Button crearPartida;
+    public Button unirsePartida;
+
     public GameObject mainMenu;
     public GameObject selectGameModes;
     public GameObject selectYears;
+    public GameObject multiplayer;
     public Button[] optionButtons; // Array de botones para las opciones
 
     // Start is called before the first frame update
@@ -18,10 +23,12 @@ public class ControladorMenusPrincipales : MonoBehaviour
         playButton.onClick.AddListener(PlayGame);
         modoHistoria.onClick.AddListener(ShowLevels);
         undo.onClick.AddListener(GoBack);
+        modoMultijugador.onClick.AddListener(ShowMultiplayer);
         mainMenu.SetActive(true);
         selectGameModes.SetActive(false);
         selectYears.SetActive(false);
         undo.gameObject.SetActive(false);
+        multiplayer.SetActive(false);
 
 
         // Asignar eventos a los botones
@@ -53,6 +60,13 @@ public class ControladorMenusPrincipales : MonoBehaviour
         Debug.Log("Show Levels");
         selectGameModes.SetActive(false);
         selectYears.SetActive(true);
+    }
+
+    void ShowMultiplayer()
+    {
+        Debug.Log("Show Multiplayer");
+        selectGameModes.SetActive(false);
+        multiplayer.SetActive(true);
     }
 
     public void LoadNextSceneWithOption(int option)
