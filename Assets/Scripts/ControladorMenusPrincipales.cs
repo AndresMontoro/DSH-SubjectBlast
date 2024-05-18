@@ -61,7 +61,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         PlayerPrefs.SetInt("SelectedOption", option);
         
         // Cargar la siguiente escena
-        SceneManager.LoadScene("SeleccionarNiveles");
+        SceneManager.LoadScene("SeleccionarNiveles" + PlayerPrefs.GetInt("SelectedOption", 1));
     }
 
     public void GoBack()
