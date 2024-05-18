@@ -64,8 +64,9 @@ public class ControladorMenusPrincipales : MonoBehaviour
     void ShowMultiplayer()
     {
         Debug.Log("Show Multiplayer");
-        selectGameModes.SetActive(false);
-        multiplayer.SetActive(true);
+        SceneManager.LoadScene("Multiplayer");
+        /*selectGameModes.SetActive(false);
+        multiplayer.SetActive(true);*/
     }
 
     public void LoadNextSceneWithOption(int option)

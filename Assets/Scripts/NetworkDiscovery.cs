@@ -61,7 +61,20 @@ public class NetworkDiscovery : MonoBehaviour, INetEventListener
     {
         var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         transport.ConnectionData.Address = serverIP;
+
+        // Escuchar el evento de conexión del cliente
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         NetworkManager.Singleton.StartClient();
+    }
+
+    private void OnClientConnected(ulong clientId)
+    {
+        // Solo el cliente debería manejar esta lógica
+        if (!NetworkManager.Singleton.IsServer && clientId == NetworkManager.Singleton.LocalClientId)
+        {
+            Debug.Log("Client connected, waiting for confirmation...");
+            // Esperar confirmación del servidor
+        }
     }
 
     public void OnNetworkReceive(NetPeer peer, NetPacketReader reader, byte channelNumber, DeliveryMethod deliveryMethod)
