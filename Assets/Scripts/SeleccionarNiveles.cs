@@ -9,7 +9,6 @@ public class SeleccionarNiveles : MonoBehaviour
 {
     public Button undo;
     public Text TitleText;
-    public Text TotalPointsCourse;
     public GameObject AvisoCursoNoSuperado;
     public Button OkyVolverAlMenu;
     public CourseResultsController courseResultsController;
@@ -58,7 +57,6 @@ public class SeleccionarNiveles : MonoBehaviour
 
         // Actualizar el título de la escena
         updateCourseTitle(selectedOption);
-        TotalPointsCourse.text = CargarResultadoTotalCurso("Curso" + selectedOption).ToString("0000");
 
         AvisoCursoNoSuperado.SetActive(false);
         undo.onClick.AddListener(GoBack);
@@ -87,40 +85,6 @@ public class SeleccionarNiveles : MonoBehaviour
         
         // Cargar la siguiente escena
         SceneManager.LoadScene("SeleccionarNiveles");
-    }
-
-    public int CargarResultadoTotalCurso(string curso)
-    {
-        string filePath = "Assets/Resources/Resultados/resultados.txt";
-        int resultadoTotal = 0;
-
-        // Verificar si el archivo existe
-        if (File.Exists(filePath))
-        {
-            // Leer todas las líneas del archivo
-            string[] lines = File.ReadAllLines(filePath);
-
-            // Recorrer cada línea del archivo
-            foreach (string line in lines)
-            {
-                // Verificar si la línea comienza con el nombre del curso especificado
-                if (line.StartsWith("" + curso))
-                {
-                    // Extraer el resultado de la línea y sumarlo al resultado total
-                    string[] parts = line.Split(':');
-                    int resultadoNivel;
-                    if (int.TryParse(parts[1].Trim(), out resultadoNivel))
-                    {
-                        resultadoTotal += resultadoNivel;
-                    }
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError("El archivo de resultados no existe.");
-        }
-        return resultadoTotal;
     }
 
     public int getWeek(string week){

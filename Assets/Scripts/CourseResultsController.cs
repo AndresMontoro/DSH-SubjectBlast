@@ -14,7 +14,7 @@ public class CourseResultsController : MonoBehaviour
     {
         CargarResultadosDesdeArchivo();
         //MostrarDatosGuardados();
-        TotalPointsCourse.text = SumarResultadosCurso(2).ToString("0000");
+        TotalPointsCourse.text = SumarResultadosCurso(PlayerPrefs.GetInt("SelectedOption", 0)).ToString("0000");
     }
 
     // Update is called once per frame
