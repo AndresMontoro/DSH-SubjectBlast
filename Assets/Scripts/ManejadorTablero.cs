@@ -64,6 +64,7 @@ public class ManejadorTablero : MonoBehaviour
             yield return new WaitForSeconds(.1f);
         }
         actualizandoTablero = false;
+        Debug.Log("MOVIMIENTO VISUAL terminado");
     }
 
     IEnumerator caidaVisual() 
@@ -141,6 +142,7 @@ public class ManejadorTablero : MonoBehaviour
             colj = -100;
             setedFich = false;
         }
+        Debug.Log("Funcion check terminada");
     }
     
     //Funcion Publica que llaman las fichas
@@ -150,13 +152,17 @@ public class ManejadorTablero : MonoBehaviour
         {
             filaj = fila;
             colj = col;
+            setedFich = false;
             checkMovimiento();
         }
         else
         {
             filai = fila;
             coli = col;
+
+            setedFich = true;
         }
+        Debug.Log("FuncionMovimiento terminada");
     }
 
     List<Vector2Int> comprobarJugada()
@@ -214,6 +220,7 @@ public class ManejadorTablero : MonoBehaviour
                     matrizLogica[i, j] = (_ficha)Random.Range((int)_ficha.FICHA_1, (int)_ficha.VACIO); 
                     fichas[i, j] = Instantiate(arrayFichas[(int)matrizLogica[i, j]], new Vector3(i * distanciaAnchuraCentro, this.GetComponent<Transform>().position.z, j * distanciaAlturaCentro), Quaternion.identity);
                     fichas[i, j].GetComponent<Ficha>().setPos(i, j);
+                    fichas[i, j].GetComponent<Ficha>().manejador = this;
                 } 
             }
         }
@@ -278,6 +285,7 @@ public class ManejadorTablero : MonoBehaviour
             {
                 fichas[i, j] = Instantiate(arrayFichas[(int)matrizLogica[i,j]], new Vector3 (i * distanciaAnchuraCentro, transformOriginal.position.z, j * distanciaAlturaCentro), Quaternion.identity);
                 fichas[i, j].GetComponent<Ficha>().setPos(i, j);
+                fichas[i, j].GetComponent<Ficha>().manejador = this;
             }
         }
     }
@@ -307,6 +315,7 @@ public class ManejadorTablero : MonoBehaviour
         {
             for (int i = 0; i < combos.Count() - 1; i++)
             {
+                Debug.Log("Index i = " + i);
                 int offset = 0;
                 if (combos[i].x == combos[i+1].x)
                 {
