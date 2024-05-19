@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -8,13 +9,24 @@ public class SeleccionarNiveles : MonoBehaviour
 {
     public Button undo;
     public Text TitleText;
+    public Text TotalPointsCourse;
+    public GameObject AvisoCursoNoSuperado;
+    public Button OkyVolverAlMenu;
+    public CourseResultsController courseResultsController;
 
     void Update()
     {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            
+
+            // Verificar si el toque es sobre un elemento UI
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                Debug.Log("Toque sobre un elemento UI");
+                return; // Si el toque es sobre un elemento UI, no hacemos nada más
+            }
+
             if (touch.phase == TouchPhase.Began)
             {
                 RaycastHit hit;
@@ -22,7 +34,18 @@ public class SeleccionarNiveles : MonoBehaviour
                 {
                     if (hit.transform == transform)
                     {
-                        LoadScene();
+                        int selectedOption = PlayerPrefs.GetInt("SelectedOption", 0);
+                        float tiempoCurso = ObtenerTiempoDeCurso(selectedOption);
+
+                        if (tiempoCurso > 0)
+                        {
+                            LoadScene();
+                        }
+                        else
+                        {
+                            AvisoCursoNoSuperado.SetActive(true);
+                            Debug.Log("No se puede cargar el nivel porque se ha terminado el tiempo para completar el curso.");
+                        }
                     }
                 }
             }
@@ -31,13 +54,31 @@ public class SeleccionarNiveles : MonoBehaviour
 
     void Start()
     {
-        undo.onClick.AddListener(GoBack);
-
         // Recuperar la opción seleccionada desde PlayerPrefs
         int selectedOption = PlayerPrefs.GetInt("SelectedOption", 0);
 
         // Actualizar el título de la escena
         updateCourseTitle(selectedOption);
+        TotalPointsCourse.text = CargarResultadoTotalCurso("Curso" + selectedOption).ToString("0000");
+
+        AvisoCursoNoSuperado.SetActive(false);
+        undo.onClick.AddListener(GoBack);
+        OkyVolverAlMenu.onClick.AddListener(CallResultsControllerFunction);
+    }
+
+    void CallResultsControllerFunction()
+    {
+        // Asegúrate de que resultsController sea una referencia válida
+        if (courseResultsController != null)
+        {
+            // Llama a la función deseada en ResultsController
+            courseResultsController.MatriculaNueva(PlayerPrefs.GetInt("SelectedOption", 0));
+            GoBack();
+        }
+        else
+        {
+            Debug.LogError("No se ha asignado una referencia a ResultsController en el inspector.");
+        }
     }
 
     public void LoadNextSceneWithOption(int option)
@@ -51,7 +92,8 @@ public class SeleccionarNiveles : MonoBehaviour
 
     public int CargarResultadoTotalCurso(string curso)
     {
-        string filePath = Application.persistentDataPath + "/resultados.txt";
+        Debug.Log("Cargando resultado del Curso" + curso);
+        string filePath = "Assets/Resources/Resultados/resultados.txt";
         int resultadoTotal = 0;
 
         // Verificar si el archivo existe
@@ -63,8 +105,9 @@ public class SeleccionarNiveles : MonoBehaviour
             // Recorrer cada línea del archivo
             foreach (string line in lines)
             {
+                Debug.Log(line);
                 // Verificar si la línea comienza con el nombre del curso especificado
-                if (line.StartsWith("Curso" + curso))
+                if (line.StartsWith("" + curso))
                 {
                     // Extraer el resultado de la línea y sumarlo al resultado total
                     string[] parts = line.Split(':');
@@ -80,7 +123,7 @@ public class SeleccionarNiveles : MonoBehaviour
         {
             Debug.LogError("El archivo de resultados no existe.");
         }
-
+        Debug.Log("Resultado del " + curso + " es " + resultadoTotal);
         return resultadoTotal;
     }
 
@@ -131,6 +174,40 @@ public class SeleccionarNiveles : MonoBehaviour
                 TitleText.text = "Curso";
                 break;
         }
+    }
+
+    // Función para cargar los tiempos desde un archivo y devolver el tiempo de un curso específico
+    public float ObtenerTiempoDeCurso(int numeroDeCurso)
+    {
+        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        if (File.Exists(filePath))
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(':');
+                if (parts.Length == 2)
+                {
+                    string curso = parts[0].Trim();
+                    float tiempo;
+                    if (float.TryParse(parts[1].Trim(), out tiempo))
+                    {
+                        if (curso == "Curso" + numeroDeCurso)
+                        {
+                            Debug.Log("Al " + curso + " le queda " + tiempo + "s");
+                            return tiempo;
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("El archivo no existe: " + filePath);
+        }
+
+        Debug.LogError("No se encontró el tiempo para el Curso" + numeroDeCurso);
+        return -1f; // o algún valor por defecto o de error
     }
 
     public void GoBack()

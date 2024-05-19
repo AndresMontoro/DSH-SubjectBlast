@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/VisorNiveles.unity
     guid: 5b05c85276218c64581be33aa5c70e4e
   - enabled: 1
+    path: Assets/Scenes/SeleccionarNiveles1.unity
+    guid: 80fdbdc7f387b7b43b5b0e6517f90955
+  - enabled: 1
     path: Assets/Scenes/SeleccionarNiveles2.unity
     guid: f22b3cc7388424240be94000d9445ef8
   - enabled: 1

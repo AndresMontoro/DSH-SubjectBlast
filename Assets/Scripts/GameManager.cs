@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         CheckStartTimerIfTwoPlayersInRoom();
 
         // Ahora que estamos seguros de que hemos ingresado a la sala, podemos incrementar el puntaje.
-        IncreasePlayerScore(1, 10); // Ejemplo de incremento de puntaje
+        //IncreasePlayerScore(1, 10); // Ejemplo de incremento de puntaje
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

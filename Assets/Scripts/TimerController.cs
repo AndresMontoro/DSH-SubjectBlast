@@ -14,7 +14,7 @@ public class TimerController : MonoBehaviour
     {
         // Cargar los tiempos desde el archivo al iniciar
         CargarTiemposDesdeArchivo();
-        EstablecerCursoActual(/*PlayerPrefs.GetInt("SelectedOption", 0);*/1);
+        EstablecerCursoActual(PlayerPrefs.GetInt("SelectedOption", 0));
         ActualizarTextoTemporizador(cursoActualIndex);
         ComenzarTemporizador();
         undo.onClick.AddListener(GoBack);

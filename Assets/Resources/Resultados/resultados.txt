@@ -5,7 +5,7 @@ Curso1Nivel4: 0
 Curso1Nivel5: 0
 Curso1Nivel6: 0
 Curso1Nivel7: 0
-Curso2Nivel1: 0
+Curso2Nivel1: 100
 Curso2Nivel2: 0
 Curso2Nivel3: 0
 Curso2Nivel4: 0
@@ -16,7 +16,7 @@ Curso3Nivel1: 0
 Curso3Nivel2: 0
 Curso3Nivel3: 0
 Curso3Nivel4: 0
-Curso3Nivel5: 0
+Curso3Nivel5: 1
 Curso3Nivel6: 0
 Curso3Nivel7: 0
 Curso4Nivel1: 0
@@ -24,11 +24,11 @@ Curso4Nivel2: 0
 Curso4Nivel3: 0
 Curso4Nivel4: 0
 Curso4Nivel5: 0
-Curso4Nivel6: 0
+Curso4Nivel6: 2
 Curso4Nivel7: 0
 Curso5Nivel1: 0
 Curso5Nivel2: 0
-Curso5Nivel3: 0
+Curso5Nivel3: 3
 Curso5Nivel4: 0
 Curso5Nivel5: 0
 Curso5Nivel6: 0
