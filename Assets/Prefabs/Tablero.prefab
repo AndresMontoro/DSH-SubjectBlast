@@ -48,8 +48,13 @@ MonoBehaviour:
   maximoColumn: 7
   puntosParaDar: 5
   puntosTotales: 0
-  distanciaAlturaCentro: 5
-  distanciaAnchuraCentro: 5
+  multiplicador: 1
+  distanciaAlturaCentro: 2
+  distanciaAnchuraCentro: 2
   arrayFichas:
   - {fileID: 5709606271134047922, guid: a5f0d56b0b597554d9ae962aabde1cef, type: 3}
   - {fileID: 1324292563806457716, guid: dc8122cfdb6af0e4b9f7bf5ba4840ecd, type: 3}
+  - {fileID: 4633339134851861775, guid: c6ab9cf7afe2a4a43a7d8b201cf8f676, type: 3}
+  - {fileID: 7152635746644796678, guid: b7ac79bb7838a654393b88ccefd047d6, type: 3}
+  - {fileID: 6947805481003619070, guid: 383427a927bd62f4aa8a7ecc3487695b, type: 3}
+  - {fileID: 555624452993535772, guid: fecb760767b3a2f4bbbc0898800885ff, type: 3}

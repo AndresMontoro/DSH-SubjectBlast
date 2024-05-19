@@ -24,7 +24,8 @@ public class ManejadorTablero : MonoBehaviour
     public GameObject[] arrayFichas;
 
     bool actualizandoTablero;
-    bool fichasCayendo;
+
+    bool[] caidaColumnas;
 
     GameObject[,] fichas;
 
@@ -50,8 +51,8 @@ public class ManejadorTablero : MonoBehaviour
     {
         Vector3 pos1 = param[0].GetComponent<Transform>().position;
         Vector3 pos2 = param[1].GetComponent<Transform>().position;
-        Vector3 posOrg1 = new Vector3(-param[0].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, param[0].GetComponent<Ficha>().getCol() * distanciaAlturaCentro, pos1.z);
-        Vector3 posOrg2 = new Vector3(-param[1].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, param[1].GetComponent<Ficha>().getCol() * distanciaAlturaCentro, pos2.z);
+        Vector3 posOrg1 = new Vector3(param[0].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, pos1.z, param[0].GetComponent<Ficha>().getCol() * distanciaAlturaCentro);
+        Vector3 posOrg2 = new Vector3(param[1].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, pos2.z, param[1].GetComponent<Ficha>().getCol() * distanciaAlturaCentro);
         Vector3 dir1 = (posOrg2 - pos1) / 10;
         Vector3 dir2 = (posOrg1 - pos2) / 10;
         while (pos1 != posOrg2 && pos2 != posOrg1)
@@ -63,6 +64,23 @@ public class ManejadorTablero : MonoBehaviour
         actualizandoTablero = false;
     }
 
+    IEnumerator caidaVisual() 
+    {
+
+        for (int i = 0; i < maximoFilas; i++)
+        {
+            for (int j = 0; j < maximoColumn; j++)
+            {
+                if (fichas[i,j] != null)
+                {
+
+                }
+            }
+        }
+        actualizandoTablero = false;
+        return null;
+    }
+    
     //Funcion que mueve la ficha en la matriz logica y llama al movimiento visual
     void MoverFicha(int fila1, int col1, int fila2, int col2)
     {
@@ -160,7 +178,6 @@ public class ManejadorTablero : MonoBehaviour
         return fichasCombo;
     }
 
-
     void generarNuevasFichas()
     {
 
@@ -205,7 +222,7 @@ public class ManejadorTablero : MonoBehaviour
         {
             for (int j = 0; j < maximoColumn; j++)
             {
-                matrizLogica[i, j] = (_ficha)Random.Range((int)_ficha.FICHA_1, 2);
+                matrizLogica[i, j] = (_ficha)Random.Range((int)_ficha.FICHA_1, (int)_ficha.VACIO);
             }
         }
     }
@@ -228,6 +245,11 @@ public class ManejadorTablero : MonoBehaviour
     {
         IniciarMatriz();
         combos = new List<Vector2Int>();
+        caidaColumnas = new bool[maximoColumn];
+        for (int i = 0; i < maximoColumn; i ++)
+        {
+            caidaColumnas[i] = false;
+        }
     }
 
     // Start is called before the first frame update
@@ -273,13 +295,8 @@ public class ManejadorTablero : MonoBehaviour
 
             caidaLogica();
 
-            for (int i = 0; i < maximoFilas; i++)
-            {
-                for (int j = 0; j < maximoColumn; j++)
-                {
-
-                }
-            }
+            actualizandoTablero = true;
+            caidaVisual();
 
             //
 
