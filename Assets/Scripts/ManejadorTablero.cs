@@ -212,7 +212,7 @@ public class ManejadorTablero : MonoBehaviour
                 if (matrizLogica[i, j] == _ficha.VACIO)
                 { 
                     matrizLogica[i, j] = (_ficha)Random.Range((int)_ficha.FICHA_1, (int)_ficha.VACIO); 
-                    fichas[i, j] = Instantiate(arrayFichas[(int)matrizLogica[i, j]], new Vector3(i * distanciaAnchuraCentro, transformOriginal.position.z, j * distanciaAlturaCentro), Quaternion.identity);
+                    fichas[i, j] = Instantiate(arrayFichas[(int)matrizLogica[i, j]], new Vector3(i * distanciaAnchuraCentro, this.GetComponent<Transform>().position.z, j * distanciaAlturaCentro), Quaternion.identity);
                     fichas[i, j].GetComponent<Ficha>().setPos(i, j);
                 } 
             }
