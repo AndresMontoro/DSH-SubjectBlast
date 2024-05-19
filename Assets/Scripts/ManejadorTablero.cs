@@ -32,6 +32,7 @@ public class ManejadorTablero : MonoBehaviour
     float _ladoCasilla;
 
     List<Vector2Int> combos;
+    GameObject[] param;
 
     enum _ficha
     {
@@ -47,20 +48,27 @@ public class ManejadorTablero : MonoBehaviour
     //Matriz de NxN fichas.
     _ficha[,] matrizLogica;
 
-    IEnumerator movimientoVisual(GameObject[] param)
+    IEnumerator movimientoVisual()
     {
         Vector3 pos1 = param[0].GetComponent<Transform>().position;
         Vector3 pos2 = param[1].GetComponent<Transform>().position;
         Vector3 posOrg1 = new Vector3(param[0].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, pos1.y, param[0].GetComponent<Ficha>().getCol() * distanciaAlturaCentro);
         Vector3 posOrg2 = new Vector3(param[1].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, pos2.y, param[1].GetComponent<Ficha>().getCol() * distanciaAlturaCentro);
-        Vector3 dir1 = (posOrg2 - pos1) / 10;
-        Vector3 dir2 = (posOrg1 - pos2) / 10;
+        Vector3 dir1 = (posOrg1 - pos1)/10;
+        Vector3 dir2 = (posOrg2 - pos2)/10;
+        Debug.Log("pos1: " + pos1);
+        Debug.Log("pos2: " + pos2);
+        Debug.Log("posOrg1: " + posOrg1);
+        Debug.Log("posOrg2: " + posOrg2);
+        Debug.Log("Dir1: " + dir1);
+        Debug.Log("Dir2: " + dir2);
         int contador = 0;
         while (contador < 10)
         {
-            pos1 += dir1;
-            pos2 += dir2;
+            param[0].GetComponent<Transform>().position += dir1;
+            param[1].GetComponent<Transform>().position += dir2;
             contador++;
+            Debug.Log("MOVIMIENTO VISUAL en curso");
             yield return new WaitForSeconds(.1f);
         }
         actualizandoTablero = false;
@@ -116,8 +124,8 @@ public class ManejadorTablero : MonoBehaviour
 
         //IENUMERATOR que mueve visiblemente las fichas
         actualizandoTablero = true;
-        GameObject[] parms = new GameObject[2] { fichas[fila1, col1], fichas[fila2, col2] };
-        StartCoroutine("movimientoVisual", parms);
+        param = new GameObject[2] { fichas[fila1, col1], fichas[fila2, col2] };
+        StartCoroutine("movimientoVisual");
         //movimientoVisual(fichas[fila1,col1], fichas[fila2,col2]);
 
         combos = comprobarJugada();
@@ -126,28 +134,63 @@ public class ManejadorTablero : MonoBehaviour
     //Funcion que checkea si el movimiento es correcto
     void checkMovimiento()
     {
-        if (Mathf.Abs(filai - filaj) == 1 ^ Mathf.Abs(coli - colj) == 1)
-        {
-            MoverFicha(filai, filaj, coli, colj);
-            filai = -100;
-            filaj = -100;
-            coli = -100;
-            colj = -100;
-        }
-        else
-        {
-            filai = -100;
-            filaj = -100;
-            coli = -100;
-            colj = -100;
-            setedFich = false;
-        }
-        Debug.Log("Funcion check terminada");
+        // Intercambia los valores de las celdas especificadas
+        _ficha temp = matrizLogica[filai, coli];
+        matrizLogica[filai, coli] = matrizLogica[filaj, colj];
+        matrizLogica[filaj, colj] = temp;
+
+        // Verifica si se forman secuencias de 3 o más en la fila y columna de ambas celdas
+        bool isMatch = CheckMatch(filai, coli) || CheckMatch(filaj, colj);
+
+        // Revertir el intercambio
+        temp = matrizLogica[filai, coli];
+        matrizLogica[filai, coli] = matrizLogica[filaj, colj];
+        matrizLogica[filaj, colj] = temp;
+        if (isMatch)
+            MoverFicha(filai,coli,filaj,colj);
+        filai = -100;
+        filaj = -100;
+        coli = -100;
+        colj = -100;
     }
-    
+
+    private bool CheckMatch(int row, int col)
+    {
+        _ficha value = matrizLogica[row, col];
+        bool match = false;
+
+        // Check horizontal match
+        int count = 1;
+        for (int i = col - 1; i >= 0 && matrizLogica[row, i] == value; i--)
+        {
+            count++;
+        }
+        for (int i = col + 1; i < maximoColumn && matrizLogica[row, i] == value; i++)
+        {
+            count++;
+        }
+        if (count >= 3) match = true;
+
+        // Check vertical match
+        count = 1;
+        for (int i = row - 1; i >= 0 && matrizLogica[i, col] == value; i--)
+        {
+            count++;
+        }
+        for (int i = row + 1; i < maximoFilas && matrizLogica[i, col] == value; i++)
+        {
+            count++;
+        }
+        if (count >= 3) match = true;
+
+        return match;
+    }
+
     //Funcion Publica que llaman las fichas
     public void Movimiento (int fila, int col)
     {
+        if (actualizandoTablero)
+            return;
         if (setedFich)
         {
             filaj = fila;
@@ -311,46 +354,55 @@ public class ManejadorTablero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (combos.Count() > 0 && !actualizandoTablero)
+        if (combos.Count > 0 && !actualizandoTablero)
         {
-            for (int i = 0; i < combos.Count() - 1; i++)
+            Debug.Log("En la lista de combos hay: " + combos.Count + " items");
+            Debug.Log("Primer elemento: " + combos[0]);
+            for (int i = 0; i < combos.Count - 1; i++)
             {
-                Debug.Log("Index i = " + i);
+                Debug.Log("Index i al comienzo del bucle " + i);
                 int offset = 0;
                 if (combos[i].x == combos[i+1].x)
                 {
-                    for (int j = 0; combos[i].x == combos[i + j].x; j++)
+                    for (int j = 0; j + i < combos.Count &&combos[i].x == combos[i + j].x; j++)
                     {
                         puntosTotales += puntosParaDar * multiplicador;
                         offset = j;
                         Destroy(fichas[combos[i + j].x, combos[i + j].y]);
                         matrizLogica[combos[i + j].x, combos[i + j].y] = _ficha.VACIO;
+                        Debug.Log("Index J = " + j + " Index I = " + i + " en bucle 1");
                     }
                     i += offset;
                     multiplicador += 1;
                 }
                 else
                 {
-                    for (int j = 0; combos[i].y == combos[i + j].y; j++)
+                    for (int j = 0; j + i < combos.Count && combos[i].y == combos[i + j].y ; j++)
                     {
                         puntosTotales += puntosParaDar * multiplicador;
                         offset = j;
                         Destroy(fichas[combos[i + j].x, combos[i + j].y]);
                         matrizLogica[combos[i + j].x, combos[i + j].y] = _ficha.VACIO;
+                        Debug.Log("Index J = " + j + " Index I = " + i + " en bucle 2");
                     }
                     i += offset;
                     multiplicador += 1;
                 }
+                Debug.Log("Index i al final del bucle " + i);
             }
 
-            caidaLogica();
+            Debug.Log("Fuera del bucle for");
+
+            combos.Clear();
+            if(combos.Count==0)
+                Debug.Log("Lista borrada");
+
+            /*caidaLogica();
 
             actualizandoTablero = true;
             caidaVisual();
 
-            combos.Clear();
-
-            StartCoroutine("generarNuevasFichas");
+            StartCoroutine("generarNuevasFichas");*/
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ficha : MonoBehaviour
 {
+    [SerializeField]
     int fila, col;
     public Camera mainCamera;
     public ManejadorTablero manejador;
