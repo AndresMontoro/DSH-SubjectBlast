@@ -23,7 +23,6 @@ public class SeleccionarNiveles : MonoBehaviour
             // Verificar si el toque es sobre un elemento UI
             if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
             {
-                Debug.Log("Toque sobre un elemento UI");
                 return; // Si el toque es sobre un elemento UI, no hacemos nada más
             }
 
@@ -92,7 +91,6 @@ public class SeleccionarNiveles : MonoBehaviour
 
     public int CargarResultadoTotalCurso(string curso)
     {
-        Debug.Log("Cargando resultado del Curso" + curso);
         string filePath = "Assets/Resources/Resultados/resultados.txt";
         int resultadoTotal = 0;
 
@@ -105,7 +103,6 @@ public class SeleccionarNiveles : MonoBehaviour
             // Recorrer cada línea del archivo
             foreach (string line in lines)
             {
-                Debug.Log(line);
                 // Verificar si la línea comienza con el nombre del curso especificado
                 if (line.StartsWith("" + curso))
                 {
@@ -123,7 +120,6 @@ public class SeleccionarNiveles : MonoBehaviour
         {
             Debug.LogError("El archivo de resultados no existe.");
         }
-        Debug.Log("Resultado del " + curso + " es " + resultadoTotal);
         return resultadoTotal;
     }
 

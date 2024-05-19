@@ -28,7 +28,7 @@ Curso4Nivel6: 2
 Curso4Nivel7: 0
 Curso5Nivel1: 0
 Curso5Nivel2: 0
-Curso5Nivel3: 3
+Curso5Nivel3: 0
 Curso5Nivel4: 0
 Curso5Nivel5: 0
 Curso5Nivel6: 0
