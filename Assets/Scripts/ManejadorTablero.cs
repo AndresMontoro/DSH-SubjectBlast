@@ -12,7 +12,7 @@ public class ManejadorTablero : MonoBehaviour
 
     public int puntosParaDar = 0;
     public int puntosTotales = 0;
-    int multiplicador = 1;
+    public int multiplicador = 1;
 
     public float distanciaAlturaCentro = 5.0f;
     public float distanciaAnchuraCentro = 5.0f;
@@ -219,7 +219,7 @@ public class ManejadorTablero : MonoBehaviour
             for (int j = 0; j < maximoColumn; j++)
             {
                 fichas[i, j] = Instantiate(arrayFichas[(int)matrizLogica[i,j]], new Vector3 (i * distanciaAnchuraCentro, transformOriginal.position.z, j * distanciaAlturaCentro), Quaternion.identity);
-
+                fichas[i, j].GetComponent<Ficha>().setPos(i, j);
             }
         }
     }
