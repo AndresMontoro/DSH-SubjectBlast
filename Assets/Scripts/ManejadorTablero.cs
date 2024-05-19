@@ -51,14 +51,16 @@ public class ManejadorTablero : MonoBehaviour
     {
         Vector3 pos1 = param[0].GetComponent<Transform>().position;
         Vector3 pos2 = param[1].GetComponent<Transform>().position;
-        Vector3 posOrg1 = new Vector3(param[0].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, pos1.z, param[0].GetComponent<Ficha>().getCol() * distanciaAlturaCentro);
-        Vector3 posOrg2 = new Vector3(param[1].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, pos2.z, param[1].GetComponent<Ficha>().getCol() * distanciaAlturaCentro);
+        Vector3 posOrg1 = new Vector3(param[0].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, pos1.y, param[0].GetComponent<Ficha>().getCol() * distanciaAlturaCentro);
+        Vector3 posOrg2 = new Vector3(param[1].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, pos2.y, param[1].GetComponent<Ficha>().getCol() * distanciaAlturaCentro);
         Vector3 dir1 = (posOrg2 - pos1) / 10;
         Vector3 dir2 = (posOrg1 - pos2) / 10;
-        while (pos1 != posOrg2 && pos2 != posOrg1)
+        int contador = 0;
+        while (contador < 10)
         {
             pos1 += dir1;
             pos2 += dir2;
+            contador++;
             yield return new WaitForSeconds(.1f);
         }
         actualizandoTablero = false;
@@ -66,19 +68,40 @@ public class ManejadorTablero : MonoBehaviour
 
     IEnumerator caidaVisual() 
     {
-
+        Vector3[,] matrizDir = new Vector3[maximoFilas, maximoColumn];
         for (int i = 0; i < maximoFilas; i++)
         {
             for (int j = 0; j < maximoColumn; j++)
             {
                 if (fichas[i,j] != null)
                 {
-
+                    matrizDir[i, j] = (new Vector3(fichas[i,j].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro,
+                                                  fichas[i,j].GetComponent<Transform>().position.y, 
+                                                  fichas[i,j].GetComponent<Ficha>().getCol() * distanciaAlturaCentro)
+                                        - fichas[i,j].GetComponent<Transform>().position)/10;
                 }
             }
         }
+
+        int contador = 0;
+
+        while (contador < 10)
+        {
+            for (int i = 0; i < maximoFilas; i++)
+            {
+                for (int j = 0; j < maximoColumn; j++)
+                {
+                    if (fichas [i,j] != null)
+                    {
+                        fichas[i, j].GetComponent<Transform>().position += matrizDir[i, j]; 
+                    }
+                }
+            }
+            contador++;
+            yield return new WaitForSeconds(.1f);
+        }
+        
         actualizandoTablero = false;
-        return null;
     }
     
     //Funcion que mueve la ficha en la matriz logica y llama al movimiento visual
@@ -178,9 +201,24 @@ public class ManejadorTablero : MonoBehaviour
         return fichasCombo;
     }
 
-    void generarNuevasFichas()
+    IEnumerator generarNuevasFichas()
     {
-
+        while (actualizandoTablero) ;
+        
+        for (int i = 0; i < maximoFilas; i++)
+        {
+            for (int j = 0; j < maximoColumn; j++)
+            {
+                if (matrizLogica[i, j] == _ficha.VACIO)
+                { 
+                    matrizLogica[i, j] = (_ficha)Random.Range((int)_ficha.FICHA_1, (int)_ficha.VACIO); 
+                    fichas[i, j] = Instantiate(arrayFichas[(int)matrizLogica[i, j]], new Vector3(i * distanciaAnchuraCentro, transformOriginal.position.z, j * distanciaAlturaCentro), Quaternion.identity);
+                    fichas[i, j].GetComponent<Ficha>().setPos(i, j);
+                } 
+            }
+        }
+        combos = comprobarJugada();
+        return null;
     }
 
     void caidaLogica ()
@@ -205,6 +243,9 @@ public class ManejadorTablero : MonoBehaviour
                         // Vaciamos la celda original
                         matrizLogica[row, col] = _ficha.VACIO;
                         fichas[row, col].GetComponent<Ficha>().setPos(row, col);
+
+                        fichas[emptyRow, col] = fichas[row, col];
+                        fichas[row, col] = null;
                     }
                     // Actualizamos emptyRow para la siguiente celda ocupada
                     emptyRow--;
@@ -262,7 +303,7 @@ public class ManejadorTablero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (combos.Count() != 0 && !actualizandoTablero)
+        if (combos.Count() > 0 && !actualizandoTablero)
         {
             for (int i = 0; i < combos.Count() - 1; i++)
             {
@@ -298,9 +339,9 @@ public class ManejadorTablero : MonoBehaviour
             actualizandoTablero = true;
             caidaVisual();
 
-            //
+            combos.Clear();
 
-            //Generar nuevas fichas con la lista COMBOS
+            StartCoroutine("generarNuevasFichas");
         }
     }
 }
