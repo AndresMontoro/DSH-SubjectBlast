@@ -1,22 +1,43 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ResultsController : MonoBehaviour
 {
     public Text TotalPointsLevel;
     public Text Week;
+    public GameObject MaximoPuntosConseguido;
+    public Button MaximoPuntosConseguidoButton;
+    public GameObject TiempoAgotado;
+    int Points;
 
     void Start()
     {
         int selectedWeek = PlayerPrefs.GetInt("SelectedWeek", 0);
         TotalPointsLevel.text = "0000";
         Week.text = "Semana " + selectedWeek;
-        //GuardarResultadoNivel(1, 3, 1000);
+        MaximoPuntosConseguidoButton.onClick.AddListener(GoBack);
+        //GuardarResultadoNivel(1, 1, 950);
         //GuardarResultadoNivel(5, 6, 1500);
         //GuardarResultadosEnArchivo();
         //CargarResultadosDesdeArchivo();
         //MostrarDatosGuardados();
+    }
+
+    void Update()
+    {
+        Points = int.Parse(TotalPointsLevel.text);
+        if(Points >= 1000)
+        {
+            TotalPointsLevel.text = "1000";
+            GuardarResultadoNivel(PlayerPrefs.GetInt("SelectedOption", 0), PlayerPrefs.GetInt("SelectedWeek", 0), Points);
+            MaximoPuntosConseguido.SetActive(true);
+        }
+        if(TiempoAgotado.activeSelf)
+        {
+            GuardarResultadoNivel(PlayerPrefs.GetInt("SelectedOption", 0), PlayerPrefs.GetInt("SelectedWeek", 0), Points);
+        }
     }
 
     public void GuardarResultadoNivel(int curso, int nivel, int resultado)
@@ -98,5 +119,10 @@ public class ResultsController : MonoBehaviour
     void OnDestroy()
     {
         GuardarResultadosEnArchivo();
+    }
+
+    public void GoBack()
+    {
+        SceneManager.LoadScene("SeleccionarNiveles" + PlayerPrefs.GetInt("SelectedOption", 0));
     }
 }

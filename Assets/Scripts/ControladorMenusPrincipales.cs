@@ -45,7 +45,6 @@ public class ControladorMenusPrincipales : MonoBehaviour
         for(int i = 1; i < 5; i++)
         {
             resultadosCursos[i - 1] = SumarResultadosCurso(i);
-            Debug.Log("Resultado Curso " + i + ": " + resultadosCursos[i]);
             if(resultadosCursos[i - 1] >= 3500) optionButtons[i].interactable = true;
         }
 

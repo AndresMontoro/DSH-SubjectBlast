@@ -9,6 +9,9 @@ public class TimerController : MonoBehaviour
     private bool isTimerRunning = false; // Estado del temporizador
     private int cursoActualIndex; // Índice del curso actual
     public Button undo;
+    public GameObject TiempoAgotado;
+    public Button TiempoAgotadoButton;
+    public GameObject MaximoPuntosConseguido;
 
     void Start()
     {
@@ -18,6 +21,7 @@ public class TimerController : MonoBehaviour
         ActualizarTextoTemporizador(cursoActualIndex);
         ComenzarTemporizador();
         undo.onClick.AddListener(GoBack);
+        TiempoAgotadoButton.onClick.AddListener(GoBack);
     }
 
     void Update()
@@ -27,12 +31,18 @@ public class TimerController : MonoBehaviour
         {
             // Restar el tiempo transcurrido desde el último frame para el curso actual
             tiemposCursos[cursoActualIndex] -= Time.deltaTime;
+
+            if(MaximoPuntosConseguido.activeSelf)
+            {
+                DetenerTemporizador();
+            }
+
             // Si el temporizador llega a cero, detenerlo
             if (tiemposCursos[cursoActualIndex] <= 0)
             {
                 DetenerTemporizador();
                 timerText.text = "0:00";
-
+                TiempoAgotado.SetActive(true);
             }
             // Actualizar el texto del temporizador
             ActualizarTextoTemporizador(cursoActualIndex);
