@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class ControladorMenusPrincipales : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public GameObject selectGameModes;
     public GameObject selectYears;
     public GameObject multiplayer;
+    public GameObject InfoHistoria;
+    public Button InfoHistoriaButton;
+    public GameObject InfoHistoriaTexto;
+    public Button InfoHistoriaTextoButton;
     public Button[] optionButtons; // Array de botones para las opciones
     private float[] resultadosCursos = new float[5]; // Array para almacenar los tiempos de cada curso
     private List<string> cursoKeys = new List<string>();
@@ -28,6 +33,8 @@ public class ControladorMenusPrincipales : MonoBehaviour
         modoHistoria.onClick.AddListener(ShowLevels);
         undo.onClick.AddListener(GoBack);
         modoMultijugador.onClick.AddListener(ShowMultiplayer);
+        InfoHistoriaButton.onClick.AddListener(ActivarDesactivarInfoHistoria);
+        InfoHistoriaTextoButton.onClick.AddListener(ActivarDesactivarInfoHistoria);
         mainMenu.SetActive(true);
         selectGameModes.SetActive(false);
         selectYears.SetActive(false);
@@ -78,6 +85,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         Debug.Log("Show Levels");
         selectGameModes.SetActive(false);
         selectYears.SetActive(true);
+        InfoHistoria.SetActive(true);
     }
 
     void ShowMultiplayer()
@@ -86,6 +94,12 @@ public class ControladorMenusPrincipales : MonoBehaviour
         SceneManager.LoadScene("Multiplayer");
         /*selectGameModes.SetActive(false);
         multiplayer.SetActive(true);*/
+    }
+
+    void ActivarDesactivarInfoHistoria()
+    {
+        if(InfoHistoriaTexto.activeSelf) InfoHistoriaTexto.SetActive(false);
+        else InfoHistoriaTexto.SetActive(true);
     }
 
     public void LoadNextSceneWithOption(int option)
