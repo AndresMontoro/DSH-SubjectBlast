@@ -34,18 +34,54 @@ public class ManejadorTablero : MonoBehaviour
 
     enum _ficha
     {
-        VACIO,
-        FICHA_1,
-        FICHA_2,
-        FICHA_3,
-        FICHA_4,
-        FICHA_5,
-        FICHA_6
+        FICHA_1 = 0,
+        FICHA_2 = 1,
+        FICHA_3 = 2,
+        FICHA_4 = 3,
+        FICHA_5 = 4,
+        FICHA_6 = 5,
+        VACIO = 6
     }
 
     //Matriz de NxN fichas.
     _ficha[,] matrizLogica;
 
+    IEnumerator movimientoVisual(GameObject[] param)
+    {
+        Vector3 pos1 = param[0].GetComponent<Transform>().position;
+        Vector3 pos2 = param[1].GetComponent<Transform>().position;
+        Vector3 posOrg1 = new Vector3(-param[0].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, param[0].GetComponent<Ficha>().getCol() * distanciaAlturaCentro, pos1.z);
+        Vector3 posOrg2 = new Vector3(-param[1].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, param[1].GetComponent<Ficha>().getCol() * distanciaAlturaCentro, pos2.z);
+        Vector3 dir1 = (posOrg2 - pos1) / 10;
+        Vector3 dir2 = (posOrg1 - pos2) / 10;
+        while (pos1 != posOrg2 && pos2 != posOrg1)
+        {
+            pos1 += dir1;
+            pos2 += dir2;
+            yield return new WaitForSeconds(.1f);
+        }
+        actualizandoTablero = false;
+    }
+
+    //Funcion que mueve la ficha en la matriz logica y llama al movimiento visual
+    void MoverFicha(int fila1, int col1, int fila2, int col2)
+    {
+        (matrizLogica[fila1, col1], matrizLogica[fila2, col2]) = (matrizLogica[fila2, col2], matrizLogica[fila1, col1]);
+
+        (fichas[fila1, col1], fichas[fila2, col2]) = (fichas[fila2, col2], fichas[fila1, col1]);
+        fichas[fila1, col1].GetComponent<Ficha>().setPos(fila1, col1);
+        fichas[fila2, col2].GetComponent<Ficha>().setPos(fila2, col2);
+
+        //IENUMERATOR que mueve visiblemente las fichas
+        actualizandoTablero = true;
+        GameObject[] parms = new GameObject[2] { fichas[fila1, col1], fichas[fila2, col2] };
+        StartCoroutine("movimientoVisual", parms);
+        //movimientoVisual(fichas[fila1,col1], fichas[fila2,col2]);
+
+        combos = comprobarJugada();
+    }
+
+    //Funcion que checkea si el movimiento es correcto
     void checkMovimiento()
     {
         if (Mathf.Abs(filai - filaj) == 1 ^ Mathf.Abs(coli - colj) == 1)
@@ -65,7 +101,8 @@ public class ManejadorTablero : MonoBehaviour
             setedFich = false;
         }
     }
-
+    
+    //Funcion Publica que llaman las fichas
     public void Movimiento (int fila, int col)
     {
         if (setedFich)
@@ -79,24 +116,6 @@ public class ManejadorTablero : MonoBehaviour
             filai = fila;
             coli = col;
         }
-    }
-
-    IEnumerator movimientoVisual (GameObject ficha1, GameObject ficha2) { yield return new WaitForSeconds(1f);}
-    IEnumerator movimientoVisual (GameObject[] param)
-    {
-        Vector3 pos1 = param[0].GetComponent<Transform>().position;
-        Vector3 pos2 = param[1].GetComponent<Transform>().position;
-        Vector3 posOrg1 = new Vector3(-param[0].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, param[0].GetComponent<Ficha>().getCol() * distanciaAlturaCentro, pos1.z);
-        Vector3 posOrg2 = new Vector3(-param[1].GetComponent<Ficha>().getFila() * distanciaAnchuraCentro, param[1].GetComponent<Ficha>().getCol() * distanciaAlturaCentro, pos2.z);
-        Vector3 dir1 = (posOrg2 - pos1) / 10;
-        Vector3 dir2 = (posOrg1 - pos2) / 10;
-        while (pos1 != posOrg2 && pos2 != posOrg1)
-        {
-            pos1 += dir1;
-            pos2 += dir2;
-            yield return new WaitForSeconds(.1f);
-        }
-        actualizandoTablero = false;
     }
 
     List<Vector2Int> comprobarJugada()
@@ -141,24 +160,6 @@ public class ManejadorTablero : MonoBehaviour
         return fichasCombo;
     }
 
-    void MoverFicha(int fila1, int col1, int fila2, int col2)
-    {
-        (matrizLogica[fila1, col1], matrizLogica[fila2, col2]) = (matrizLogica[fila2, col2], matrizLogica[fila1, col1]);
-        //IENUMERATOR que mueve visiblemente las fichas
-        movimientoVisual(fichas[fila1,col1], fichas[fila2,col2]);
-
-        (fichas[fila1, col1], fichas[fila2, col2]) = (fichas[fila2, col2], fichas[fila1, col1]);
-        fichas[fila1, col1].GetComponent<Ficha>().setPos(fila1, col1);
-        fichas[fila2, col2].GetComponent<Ficha>().setPos(fila2, col2);
-
-        //IENUMERATOR que mueve visiblemente las fichas
-        actualizandoTablero = true;
-        GameObject[] parms = new GameObject[2] { fichas[fila1, col1], fichas[fila2, col2] };
-        StartCoroutine("movimientoVisual", parms);
-        //movimientoVisual(fichas[fila1,col1], fichas[fila2,col2]);
-
-        combos = comprobarJugada();
-    }
 
     void generarNuevasFichas()
     {
@@ -199,25 +200,43 @@ public class ManejadorTablero : MonoBehaviour
 
     void IniciarMatriz()
     {
-        //TODO
+        matrizLogica = new _ficha[maximoFilas, maximoColumn];
+        for (int i = 0; i < maximoFilas; i++)
+        {
+            for (int j = 0; j < maximoColumn; j++)
+            {
+                matrizLogica[i, j] = (_ficha)Random.Range((int)_ficha.FICHA_1, 2);
+            }
+        }
     }
 
     void PintarTablero()
     {
-        //TODO
+        Transform transformOriginal = this.GetComponent<Transform>();
+        fichas = new GameObject[maximoFilas, maximoColumn];
+        for (int i = 0; i <maximoFilas; i++)
+        {
+            for (int j = 0; j < maximoColumn; j++)
+            {
+                fichas[i, j] = Instantiate(arrayFichas[(int)matrizLogica[i,j]], new Vector3 (i * distanciaAnchuraCentro, transformOriginal.position.z, j * distanciaAlturaCentro), Quaternion.identity);
+
+            }
+        }
     }
 
-    void Awake()
+    void Awake ()
     {
         IniciarMatriz();
+        combos = new List<Vector2Int>();
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Start ()
     {
         PintarTablero();
     }
 
+    
     // Update is called once per frame
     void Update()
     {
