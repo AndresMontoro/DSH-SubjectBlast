@@ -31,7 +31,7 @@ public class ResultsController : MonoBehaviour
     void Update()
     {
         Points = int.Parse(TotalPointsLevel.text);
-        if(Points >= 1000)
+        if(Points >= 1000 && SceneManager.GetActiveScene().name != "Contrarreloj" && SceneManager.GetActiveScene().name != "Multijugador")
         {
             TotalPointsLevel.text = "1000";
             GuardarResultadoNivel(PlayerPrefs.GetInt("SelectedOption", 0), PlayerPrefs.GetInt("SelectedWeek", 0), 1000);
