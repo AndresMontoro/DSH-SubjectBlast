@@ -308,6 +308,7 @@ MonoBehaviour:
   anim_duration: 1
   isMoving: 0
   isTalking: 0
+  grid: {fileID: 1863531641}
 --- !u!64 &136806621
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1342,6 +1343,7 @@ MonoBehaviour:
   anim_duration: 1
   isMoving: 0
   isTalking: 0
+  grid: {fileID: 1863531641}
 --- !u!64 &536744600
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1756,6 +1758,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553103868}
   m_CullTransparentMesh: 1
+--- !u!1 &640093713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 640093714}
+  m_Layer: 0
+  m_Name: Objetos Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &640093714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640093713}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.5537148, y: -2.6061544, z: 0.6995646}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1515381357}
+  - {fileID: 926028591}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &642416211
 GameObject:
   m_ObjectHideFlags: 0
@@ -2023,6 +2058,7 @@ MonoBehaviour:
   anim_duration: 1
   isMoving: 0
   isTalking: 0
+  grid: {fileID: 1863531641}
 --- !u!64 &670307692
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2315,8 +2351,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926028590}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.15, y: 0.1, z: -7}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -2.4037147, y: 2.7061543, z: -7.6995645}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2324,7 +2360,7 @@ Transform:
   - {fileID: 2110781262}
   - {fileID: 510126612}
   - {fileID: 1436161391}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 640093714}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &937775611
 GameObject:
@@ -3411,7 +3447,7 @@ GameObject:
   - component: {fileID: 1224919218}
   - component: {fileID: 1224919217}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3841,6 +3877,7 @@ MonoBehaviour:
   anim_duration: 1
   isMoving: 0
   isTalking: 0
+  grid: {fileID: 0}
 --- !u!1 &1308210344
 GameObject:
   m_ObjectHideFlags: 0
@@ -4498,12 +4535,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515381353}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.55, y: -0, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -4.103715, y: 2.6061544, z: -0.6995646}
   m_LocalScale: {x: 10.75, y: 18, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 640093714}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1557769621
 GameObject:
@@ -5392,7 +5429,7 @@ GameObject:
   - component: {fileID: 1863531642}
   - component: {fileID: 1863531641}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: Boards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5416,9 +5453,16 @@ MonoBehaviour:
   - type: 1
     prefab: {fileID: 7203504569103751798, guid: 252c617552fe1a6498c27b8bb4887976, type: 3}
   backgroundPrefab: {fileID: 2602728519300757784, guid: f8c4a01104f8dc14fa3034296ef51295, type: 3}
+  prefabProfesores:
+  - {fileID: 2093505274}
+  - {fileID: 136806616}
+  - {fileID: 670307687}
+  - {fileID: 536744595}
   xDim: 7
   zDim: 7
   fillTime: 0.1
+  isFilled: 0
+  playingAnim: 0
 --- !u!4 &1863531642
 Transform:
   m_ObjectHideFlags: 0
@@ -6260,6 +6304,7 @@ MonoBehaviour:
   anim_duration: 1
   isMoving: 0
   isTalking: 0
+  grid: {fileID: 1863531641}
 --- !u!64 &2093505279
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6449,7 +6494,6 @@ SceneRoots:
   - {fileID: 1513084848}
   - {fileID: 1635100286}
   - {fileID: 2088913568}
-  - {fileID: 1515381357}
   - {fileID: 1224919220}
-  - {fileID: 926028591}
   - {fileID: 1863531642}
+  - {fileID: 640093714}

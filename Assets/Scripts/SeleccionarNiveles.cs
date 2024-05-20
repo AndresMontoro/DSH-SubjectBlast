@@ -73,6 +73,14 @@ public class SeleccionarNiveles : MonoBehaviour
         {
             UltimoCursoTerminado.SetActive(true);
         }
+
+        if(courseResultsController.SumarResultadosCurso(selectedOption) >= 3500 
+        && ObtenerTiempoDeCurso(selectedOption) <= 0 
+        && !ComprobarMinimoNiveles())
+        {
+            AvisoCursoNoSuperado.SetActive(true);
+            Debug.Log("Minimo de puntos en cada nivel no alcanzado");
+        }
     }
 
     void CallResultsControllerFunction()
@@ -180,6 +188,49 @@ public class SeleccionarNiveles : MonoBehaviour
 
         Debug.LogError("No se encontró el tiempo para el Curso" + numeroDeCurso);
         return -1f; // o algún valor por defecto o de error
+    }
+
+    bool ComprobarMinimoNiveles(){
+        for (int i = 1; i <= 7; i++)
+        {
+            string key = "Curso" + PlayerPrefs.GetInt("SelectedOption", 0) + "Nivel" + i;
+            int resultadoNivel = PlayerPrefs.GetInt(key, 0);
+            if(resultadoNivel < 500) return false;
+        }
+        return true;
+    }
+
+    public void CargarResultadosDesdeArchivo()
+    {
+        string filePath = "Assets/Resources/Resultados/resultados.txt";
+        
+        // Verificar si el archivo existe
+        if (File.Exists(filePath))
+        {
+            // Leer todas las líneas del archivo
+            string[] lines = File.ReadAllLines(filePath);
+
+            // Recorrer cada línea del archivo
+            foreach (string line in lines)
+            {
+                // Dividir la línea en la clave y el valor
+                string[] parts = line.Split(':');
+                string key = parts[0].Trim();
+                int value;
+                if (int.TryParse(parts[1].Trim(), out value))
+                {
+                    // Guardar el valor en PlayerPrefs
+                    PlayerPrefs.SetInt(key, value);
+                }
+            }
+
+            // Guardar los cambios en PlayerPrefs
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            Debug.LogError("El archivo de resultados no existe.");
+        }
     }
 
     public void GoBack()

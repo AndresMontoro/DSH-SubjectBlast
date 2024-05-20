@@ -17,15 +17,15 @@ public class MovSpriteProfesor : MonoBehaviour
     private float elapsedTime = 0.0f;
     public bool isMoving = false;
     public bool isTalking = false;
-
-    
-
+    public Grid grid;
 
     void Start()
     {
         elapsedTime = 0.0f;
         isMoving = true;
         audioSource = GetComponent<AudioSource>();
+        grid.playingAnim = true;
+        gameObject.SetActive(true);
     }
 
     void Update()
@@ -70,6 +70,12 @@ public class MovSpriteProfesor : MonoBehaviour
 
                 // Lerp between pointA and pointB
                 imagenProfesor.transform.position = Vector3.Lerp(pointB, pointA, easedT2);
+
+                if (transform.position == pointA) {
+                    gameObject.SetActive(false);
+                    Debug.Log("Desactivado");
+                    grid.playingAnim = false;
+                }
             }
         }
     }
@@ -83,5 +89,15 @@ public class MovSpriteProfesor : MonoBehaviour
         yield return new WaitForSeconds(clip.length+0.5f);
         dialogueBox.SetActive(false);
         isTalking = false;
+        audioSource.clip = null;
+    }
+
+    public void StartVariables()
+    {
+        elapsedTime = 0.0f;
+        isMoving = true;
+        audioSource = GetComponent<AudioSource>();
+        grid.playingAnim = true;
+        gameObject.SetActive(true);
     }
 }

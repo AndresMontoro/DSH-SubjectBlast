@@ -59,7 +59,9 @@ public class ControladorMenusPrincipales : MonoBehaviour
         for(int i = 1; i <= 5; i++)
         {
             resultadosCursos[i - 1] = SumarResultadosCurso(i);
-            if(resultadosCursos[i - 1] >= 3500 && i != 5) optionButtons[i].interactable = true;
+            if(resultadosCursos[i - 1] >= 3500
+            && ComprobarMinimoNivel(i - 1)
+            && i != 5) optionButtons[i].interactable = true;
         }
 
         // Asignar eventos a los botones
@@ -225,7 +227,6 @@ public class ControladorMenusPrincipales : MonoBehaviour
                 }
             }
         }
-        //CargarTiemposDesdeArchivo();
         GuardarTiemposEnArchivoMatriculaNueva();
     }
 
@@ -271,5 +272,15 @@ public class ControladorMenusPrincipales : MonoBehaviour
             }
         }
         Debug.Log("Se han cargado los tiempos");
+    }
+
+    bool ComprobarMinimoNivel(int curso){
+        for (int i = 1; i <= 7; i++)
+        {
+            string key = "Curso" + curso + "Nivel" + i;
+            int resultadoNivel = PlayerPrefs.GetInt(key, 0);
+            if(resultadoNivel < 500) return false;
+        }
+        return true;
     }
 }
