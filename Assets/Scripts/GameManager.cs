@@ -11,15 +11,30 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Text player2ScoreText;
     public Button undo;
 
-    private float tiempo = 180f;
+    private float tiempo = 10f;
     private bool isTimerRunning = false;
     private bool isGameStarted = false;
     private int player1Score = 0;
     private int player2Score = 0;
+    public GameObject HasGanado;
+    public GameObject HasGanadoAbandono;
+    public GameObject HaGanadoElRival;
+    public GameObject Empate;
+    public Button HasGanadoButton;
+    public Button HasGanadoAbandonoButton;
+    public Button HaGanadoElRivalButton;
+    public Button EmpateButton;
+
+    private int playerIndex;
 
     void Start()
     {
         undo.onClick.AddListener(GoBack);
+        HasGanadoButton.onClick.AddListener(GoBack);
+        HasGanadoAbandonoButton.onClick.AddListener(GoBack);
+        HaGanadoElRivalButton.onClick.AddListener(GoBack);
+        EmpateButton.onClick.AddListener(GoBack);
+
         Debug.Log("GameManager PhotonView: " + photonView.ViewID);
     }
 
@@ -35,10 +50,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (isTimerRunning)
             {
                 tiempo -= Time.deltaTime;
+                player1Score = int.Parse(player1ScoreText.text);
+                player2Score = int.Parse(player2ScoreText.text);
                 if (tiempo <= 0)
                 {
                     tiempo = 0;
                     StopTimer();
+                    Resultados(playerIndex);
                 }
                 UpdateTimerText();
             }
@@ -103,10 +121,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined room.");
+        playerIndex = PhotonNetwork.LocalPlayer.ActorNumber; // Asignar el índice del jugador basado en su ActorNumber
+        Debug.Log("Soy el index " + playerIndex);
         CheckStartTimerIfTwoPlayersInRoom();
+    }
 
-        // Ahora que estamos seguros de que hemos ingresado a la sala, podemos incrementar el puntaje.
-        //IncreasePlayerScore(1, 10); // Ejemplo de incremento de puntaje
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("Player entered room: " + newPlayer.NickName);
+        CheckStartTimerIfTwoPlayersInRoom();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -118,6 +141,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             // Mostrar mensaje indicando que el jugador restante ha ganado
             Player remainingPlayer = PhotonNetwork.PlayerList[0];
+            HasGanadoAbandono.SetActive(true);
             Debug.Log("Player " + remainingPlayer.NickName + " has won the game!");
             tiempo = 180f;
         }
@@ -137,7 +161,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-    // Ejemplo de cómo incrementar el puntaje de un jugador
     public void IncreasePlayerScore(int playerIndex, int increment)
     {
         if (playerIndex == 1)
@@ -150,6 +173,41 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             player2Score += increment;
             UpdatePlayerScore(playerIndex, player2Score);
+        }
+    }
+
+    void Resultados(int index)
+    {
+        Debug.Log("Jugador1: " + player1Score + "\nJugador2: " + player2Score);
+        if (index == 1)
+        {
+            if (player1Score > player2Score)
+            {
+                HasGanado.SetActive(true);
+            }
+            else if (player1Score < player2Score)
+            {
+                HaGanadoElRival.SetActive(true);
+            }
+            else
+            {
+                Empate.SetActive(true);
+            }
+        }
+        else if (index == 2)
+        {
+            if (player1Score < player2Score)
+            {
+                HasGanado.SetActive(true);
+            }
+            else if (player1Score > player2Score)
+            {
+                HaGanadoElRival.SetActive(true);
+            }
+            else
+            {
+                Empate.SetActive(true);
+            }
         }
     }
 }
