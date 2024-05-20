@@ -1,6 +1,6 @@
 Curso1Nivel1: 600
 Curso1Nivel2: 0
-Curso1Nivel3: 56
+Curso1Nivel3: 352
 Curso1Nivel4: 0
 Curso1Nivel5: 0
 Curso1Nivel6: 0

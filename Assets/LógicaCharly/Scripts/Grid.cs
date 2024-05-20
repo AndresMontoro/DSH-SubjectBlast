@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Grid : MonoBehaviour
 {
@@ -379,7 +380,17 @@ public class Grid : MonoBehaviour
 
     public bool ClearPiece(int x, int z)
     {
-        if (pieces[x, z].IsClearable() && !pieces[x, z].ClearableComponent.IsBeingCleared) {
+        if(SceneManager.GetActiveScene().name == "Contrarreloj" || SceneManager.GetActiveScene().name == "Multijugador") {
+            if (pieces[x, z].IsClearable() && !pieces[x, z].ClearableComponent.IsBeingCleared) {
+                pieces[x, z].ClearableComponent.Clear();
+                SpawnNewPiece(x, z, PieceType.EMPTY);
+                if(isFilled) resultsController.SumarPuntos();
+
+                Debug.Log("Limpio en Contrarreloj/Multijugador");
+                return true;
+            } 
+        } else {
+            if (pieces[x, z].IsClearable() && !pieces[x, z].ClearableComponent.IsBeingCleared) {
             pieces[x, z].ClearableComponent.Clear();
             SpawnNewPiece(x, z, PieceType.EMPTY);
             if(isFilled) resultsController.SumarPuntos();
@@ -390,8 +401,9 @@ public class Grid : MonoBehaviour
             }
 
             return true;
+            }
         }
-
+        
         return false;
     }
 
