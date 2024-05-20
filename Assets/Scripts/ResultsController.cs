@@ -11,6 +11,7 @@ public class ResultsController : MonoBehaviour
     public Button MaximoPuntosConseguidoButton;
     public GameObject TiempoAgotado;
     public Button undo;
+    public int ValorFicha = 8;
     int Points;
 
     void Start()
@@ -120,7 +121,7 @@ public class ResultsController : MonoBehaviour
     public void SumarPuntos()
     {
         int Puntos = int.Parse(TotalPointsLevel.text);
-        Puntos += 4;
+        Puntos += ValorFicha;
         TotalPointsLevel.text = Puntos.ToString("0000");
         GuardarResultadoNivel(PlayerPrefs.GetInt("SelectedOption", 0), PlayerPrefs.GetInt("SelectedWeek"), Puntos);
     }
