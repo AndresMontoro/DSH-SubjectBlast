@@ -1,6 +1,5 @@
 using System.IO;
 using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -15,6 +14,41 @@ public class SeleccionarNiveles : MonoBehaviour
     public GameObject UltimoCursoTerminado;
     public Button UltimoCursoTerminadoButton;
     public CourseResultsController courseResultsController;
+
+    void Start()
+    {
+        // Recuperar la opción seleccionada desde PlayerPrefs
+        int selectedOption = PlayerPrefs.GetInt("SelectedOption", 0);
+
+        // Actualizar el título de la escena
+        updateCourseTitle(selectedOption);
+
+        AvisoCursoNoSuperado.SetActive(false);
+        undo.onClick.AddListener(GoBack);
+        if (selectedOption == 5) UltimoCursoTerminadoButton.onClick.AddListener(GoBack);
+        OkyVolverAlMenu.onClick.AddListener(CallResultsControllerFunction);
+
+        // Verificaciones y lógica de inicialización
+        if ((selectedOption == 5
+            && courseResultsController.SumarResultadosCurso(selectedOption) >= 3500
+            && ObtenerTiempoDeCurso(selectedOption) <= 0)
+            || selectedOption == 5 && courseResultsController.SumarResultadosCurso(selectedOption) >= 7000)
+        {
+            UltimoCursoTerminado.SetActive(true);
+        }
+
+        if (courseResultsController.SumarResultadosCurso(selectedOption) >= 3500 
+            && ObtenerTiempoDeCurso(selectedOption) <= 0 
+            && !ComprobarMinimoNiveles())
+        {
+            AvisoCursoNoSuperado.SetActive(true);
+            Debug.Log("Minimo de puntos en cada nivel no alcanzado");
+        }
+
+        // Copiar archivos necesarios a la ruta persistente
+        CopiarArchivosARutaPersistente();
+        CargarResultadosDesdeArchivo();
+    }
 
     void Update()
     {
@@ -53,42 +87,10 @@ public class SeleccionarNiveles : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        // Recuperar la opción seleccionada desde PlayerPrefs
-        int selectedOption = PlayerPrefs.GetInt("SelectedOption", 0);
-
-        // Actualizar el título de la escena
-        updateCourseTitle(selectedOption);
-
-        AvisoCursoNoSuperado.SetActive(false);
-        undo.onClick.AddListener(GoBack);
-        if(selectedOption == 5) UltimoCursoTerminadoButton.onClick.AddListener(GoBack);
-        OkyVolverAlMenu.onClick.AddListener(CallResultsControllerFunction);
-        
-        if((selectedOption == 5
-        && courseResultsController.SumarResultadosCurso(selectedOption) >= 3500
-        && ObtenerTiempoDeCurso(selectedOption) <= 0)
-        || selectedOption == 5 && courseResultsController.SumarResultadosCurso(selectedOption) >= 7000)
-        {
-            UltimoCursoTerminado.SetActive(true);
-        }
-
-        if(courseResultsController.SumarResultadosCurso(selectedOption) >= 3500 
-        && ObtenerTiempoDeCurso(selectedOption) <= 0 
-        && !ComprobarMinimoNiveles())
-        {
-            AvisoCursoNoSuperado.SetActive(true);
-            Debug.Log("Minimo de puntos en cada nivel no alcanzado");
-        }
-    }
-
     void CallResultsControllerFunction()
     {
-        // Asegúrate de que resultsController sea una referencia válida
         if (courseResultsController != null)
         {
-            // Llama a la función deseada en ResultsController
             courseResultsController.MatriculaNueva(PlayerPrefs.GetInt("SelectedOption", 0));
             GoBack();
         }
@@ -107,34 +109,28 @@ public class SeleccionarNiveles : MonoBehaviour
         SceneManager.LoadScene("SeleccionarNiveles");
     }
 
-    public int getWeek(string week){
-
+    public int getWeek(string week)
+    {
         int numero = 0;
-        // Utilizamos una expresión regular para extraer el número
         Match match = Regex.Match(week, @"\d+");
-
-        // Verificamos si se encontró un número en la cadena
         if (match.Success)
         {
-            // Convertimos el valor de la coincidencia a un número entero
             numero = int.Parse(match.Value);
         }
-
         return numero;
     }
 
     void LoadScene()
     {
-        // Guardar la semana seleccionada en PlayerPrefs
         int semana = getWeek(gameObject.name);
         PlayerPrefs.SetInt("SelectedWeek", semana);
-
         SceneManager.LoadScene("VisorNiveles");
     }
 
     public void updateCourseTitle(int selectedOption)
     {
-        switch(selectedOption) {
+        switch (selectedOption)
+        {
             case 1:
                 TitleText.text = "1ᵉʳ curso";
                 break;
@@ -156,10 +152,9 @@ public class SeleccionarNiveles : MonoBehaviour
         }
     }
 
-    // Función para cargar los tiempos desde un archivo y devolver el tiempo de un curso específico
     public float ObtenerTiempoDeCurso(int numeroDeCurso)
     {
-        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "tiempos.txt");
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -169,8 +164,7 @@ public class SeleccionarNiveles : MonoBehaviour
                 if (parts.Length == 2)
                 {
                     string curso = parts[0].Trim();
-                    float tiempo;
-                    if (float.TryParse(parts[1].Trim(), out tiempo))
+                    if (float.TryParse(parts[1].Trim(), out float tiempo))
                     {
                         if (curso == "Curso" + numeroDeCurso)
                         {
@@ -190,41 +184,32 @@ public class SeleccionarNiveles : MonoBehaviour
         return -1f; // o algún valor por defecto o de error
     }
 
-    bool ComprobarMinimoNiveles(){
+    bool ComprobarMinimoNiveles()
+    {
         for (int i = 1; i <= 7; i++)
         {
             string key = "Curso" + PlayerPrefs.GetInt("SelectedOption", 0) + "Nivel" + i;
             int resultadoNivel = PlayerPrefs.GetInt(key, 0);
-            if(resultadoNivel < 500) return false;
+            if (resultadoNivel < 500) return false;
         }
         return true;
     }
 
     public void CargarResultadosDesdeArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/resultados.txt";
-        
-        // Verificar si el archivo existe
+        string filePath = Path.Combine(Application.persistentDataPath, "resultados.txt");
         if (File.Exists(filePath))
         {
-            // Leer todas las líneas del archivo
             string[] lines = File.ReadAllLines(filePath);
-
-            // Recorrer cada línea del archivo
             foreach (string line in lines)
             {
-                // Dividir la línea en la clave y el valor
                 string[] parts = line.Split(':');
                 string key = parts[0].Trim();
-                int value;
-                if (int.TryParse(parts[1].Trim(), out value))
+                if (int.TryParse(parts[1].Trim(), out int value))
                 {
-                    // Guardar el valor en PlayerPrefs
                     PlayerPrefs.SetInt(key, value);
                 }
             }
-
-            // Guardar los cambios en PlayerPrefs
             PlayerPrefs.Save();
         }
         else
@@ -236,5 +221,26 @@ public class SeleccionarNiveles : MonoBehaviour
     public void GoBack()
     {
         SceneManager.LoadScene("Menu principal");
+    }
+
+    void CopiarArchivosARutaPersistente()
+    {
+        string[] archivos = { "resultados.txt", "tiempos.txt" };
+        foreach (string archivo in archivos)
+        {
+            string rutaDestino = Path.Combine(Application.persistentDataPath, archivo);
+            if (!File.Exists(rutaDestino))
+            {
+                TextAsset archivoOriginal = Resources.Load<TextAsset>("Resultados/" + Path.GetFileNameWithoutExtension(archivo));
+                if (archivoOriginal != null)
+                {
+                    File.WriteAllBytes(rutaDestino, archivoOriginal.bytes);
+                }
+                else
+                {
+                    Debug.LogError("No se pudo encontrar el archivo: " + archivo);
+                }
+            }
+        }
     }
 }

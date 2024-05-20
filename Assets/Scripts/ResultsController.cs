@@ -21,11 +21,11 @@ public class ResultsController : MonoBehaviour
         Week.text = "Semana " + selectedWeek;
         MaximoPuntosConseguidoButton.onClick.AddListener(GoBack);
         undo.onClick.AddListener(GuardarYSalir);
-        //GuardarResultadoNivel(1, 1, 950);
-        //GuardarResultadoNivel(5, 6, 1500);
-        //GuardarResultadosEnArchivo();
-        //CargarResultadosDesdeArchivo();
-        //MostrarDatosGuardados();
+
+        // Copiar archivos de recursos a la ruta persistente si es necesario
+        CopiarArchivosARutaPersistente();
+        CargarResultadosDesdeArchivo();
+        MostrarDatosGuardados();
     }
 
     void Update()
@@ -56,7 +56,7 @@ public class ResultsController : MonoBehaviour
 
     public void GuardarResultadosEnArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/resultados.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "resultados.txt");
         using (StreamWriter writer = new StreamWriter(filePath))
         {
             for (int curso = 1; curso <= 5; curso++)
@@ -73,7 +73,7 @@ public class ResultsController : MonoBehaviour
 
     public void CargarResultadosDesdeArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/resultados.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "resultados.txt");
         
         // Verificar si el archivo existe
         if (File.Exists(filePath))
@@ -141,5 +141,26 @@ public class ResultsController : MonoBehaviour
     public void GoBack()
     {
         SceneManager.LoadScene("SeleccionarNiveles" + PlayerPrefs.GetInt("SelectedOption", 0));
+    }
+
+    void CopiarArchivosARutaPersistente()
+    {
+        string[] archivos = { "resultados.txt" };
+        foreach (string archivo in archivos)
+        {
+            string rutaDestino = Path.Combine(Application.persistentDataPath, archivo);
+            if (!File.Exists(rutaDestino))
+            {
+                TextAsset archivoOriginal = Resources.Load<TextAsset>("Resultados/" + Path.GetFileNameWithoutExtension(archivo));
+                if (archivoOriginal != null)
+                {
+                    File.WriteAllBytes(rutaDestino, archivoOriginal.bytes);
+                }
+                else
+                {
+                    Debug.LogError("No se pudo encontrar el archivo: " + archivo);
+                }
+            }
+        }
     }
 }

@@ -12,8 +12,9 @@ public class CourseResultsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CopiarArchivosARutaPersistente();
         CargarResultadosDesdeArchivo();
-        //MostrarDatosGuardados();
+        CargarTiemposDesdeArchivo();
         TotalPointsCourse.text = SumarResultadosCurso(PlayerPrefs.GetInt("SelectedOption", 0)).ToString("0000");
     }
 
@@ -26,7 +27,7 @@ public class CourseResultsController : MonoBehaviour
     // Función para cargar los resultados desde un archivo de texto
     public void CargarResultadosDesdeArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/resultados.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "resultados.txt");
         
         // Verificar si el archivo existe
         if (File.Exists(filePath))
@@ -98,7 +99,7 @@ public class CourseResultsController : MonoBehaviour
 
     public void MatriculaNueva(int curso)
     {
-        string filePathResultados = "Assets/Resources/Resultados/resultados.txt";
+        string filePathResultados = Path.Combine(Application.persistentDataPath, "resultados.txt");
         using (StreamWriter writer = new StreamWriter(filePathResultados))
         {
             for (int numCursos = 1; numCursos <= 5; numCursos++)
@@ -127,7 +128,7 @@ public class CourseResultsController : MonoBehaviour
     // Función para guardar los tiempos de todos los cursos en un archivo de texto
     public void GuardarTiemposEnArchivoMatriculaNueva(int curso)
     {
-        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "tiempos.txt");
         using (StreamWriter writer = new StreamWriter(filePath, false)) // Sobrescribe el archivo
         {
             for (int i = 0; i < tiemposCursos.Length; i++)
@@ -146,7 +147,7 @@ public class CourseResultsController : MonoBehaviour
     // Función para cargar los tiempos desde un archivo de texto
     public void CargarTiemposDesdeArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "tiempos.txt");
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -171,5 +172,28 @@ public class CourseResultsController : MonoBehaviour
             }
         }
         Debug.Log("Se han cargado los tiempos");
+    }
+
+    private void CopiarArchivosARutaPersistente()
+    {
+        CopiarArchivoARutaPersistente("Resultados/resultados.txt");
+        CopiarArchivoARutaPersistente("Resultados/tiempos.txt");
+    }
+
+    private void CopiarArchivoARutaPersistente(string resourcePath)
+    {
+        TextAsset asset = Resources.Load<TextAsset>(resourcePath);
+        if (asset != null)
+        {
+            string persistentPath = Path.Combine(Application.persistentDataPath, Path.GetFileName(resourcePath));
+            if (!File.Exists(persistentPath))
+            {
+                File.WriteAllText(persistentPath, asset.text);
+            }
+        }
+        else
+        {
+            Debug.LogError($"El archivo {resourcePath} no existe en Resources.");
+        }
     }
 }

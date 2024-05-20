@@ -15,11 +15,18 @@ public class TimerController : MonoBehaviour
 
     void Start()
     {
+        // Copiar archivos necesarios a la ruta persistente
+        CopiarArchivosARutaPersistente();
+        
         // Cargar los tiempos desde el archivo al iniciar
         CargarTiemposDesdeArchivo();
+        
+        // Establecer el curso actual basado en la opción seleccionada
         EstablecerCursoActual(PlayerPrefs.GetInt("SelectedOption", 0));
         ActualizarTextoTemporizador(cursoActualIndex);
         ComenzarTemporizador();
+
+        // Configurar listeners para botones
         undo.onClick.AddListener(GoBack);
         TiempoAgotadoButton.onClick.AddListener(GoBack);
     }
@@ -32,7 +39,7 @@ public class TimerController : MonoBehaviour
             // Restar el tiempo transcurrido desde el último frame para el curso actual
             tiemposCursos[cursoActualIndex] -= Time.deltaTime;
 
-            if(MaximoPuntosConseguido.activeSelf)
+            if (MaximoPuntosConseguido.activeSelf)
             {
                 DetenerTemporizador();
             }
@@ -76,13 +83,13 @@ public class TimerController : MonoBehaviour
     // Función para guardar los tiempos de todos los cursos en un archivo de texto
     public void GuardarTiemposEnArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "tiempos.txt");
         using (StreamWriter writer = new StreamWriter(filePath, false)) // Sobrescribe el archivo
         {
             for (int i = 0; i < tiemposCursos.Length; i++)
             {
                 string key = "Curso" + (i + 1);
-                if(tiemposCursos[i] < 0) tiemposCursos[i] = 0;
+                if (tiemposCursos[i] < 0) tiemposCursos[i] = 0;
                 writer.WriteLine(key + ": " + tiemposCursos[i]);
             }
         }
@@ -91,24 +98,25 @@ public class TimerController : MonoBehaviour
     // Función para cargar los tiempos desde un archivo de texto
     public void CargarTiemposDesdeArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "tiempos.txt");
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
             foreach (string line in lines)
             {
-                string[] parts = line.Split(':');
-                if (parts.Length == 2)
+                // Dividir la línea en dos partes usando el primer ':' encontrado
+                int separatorIndex = line.IndexOf(':');
+                if (separatorIndex != -1)
                 {
-                    string curso = parts[0].Trim();
-                    float tiempo;
-                    if (float.TryParse(parts[1].Trim(), out tiempo))
+                    string curso = line.Substring(0, separatorIndex).Trim();
+                    if (float.TryParse(line.Substring(separatorIndex + 1).Trim(), out float tiempo))
                     {
                         for (int i = 0; i < tiemposCursos.Length; i++)
                         {
                             if (curso == "Curso" + (i + 1))
                             {
                                 tiemposCursos[i] = tiempo;
+                                Debug.Log("Tiempo del curso " + (i+1) + " : " + tiemposCursos[i]);
                             }
                         }
                     }
@@ -121,11 +129,10 @@ public class TimerController : MonoBehaviour
     // Función para actualizar el texto del temporizador
     private void ActualizarTextoTemporizador(int curso)
     {
-        // Se asume que se mostrará el tiempo del primer curso
-        int minutos = Mathf.FloorToInt(tiemposCursos[curso ] / 60);
-        int segundos = Mathf.FloorToInt(tiemposCursos[curso ] % 60);
-        if(minutos < 0) minutos = 0;
-        if(segundos < 0) segundos = 0;
+        int minutos = Mathf.FloorToInt(tiemposCursos[curso] / 60);
+        int segundos = Mathf.FloorToInt(tiemposCursos[curso] % 60);
+        if (minutos < 0) minutos = 0;
+        if (segundos < 0) segundos = 0;
         timerText.text = minutos.ToString("00") + ":" + segundos.ToString("00");
     }
 
@@ -139,5 +146,26 @@ public class TimerController : MonoBehaviour
     {
         GuardarTiemposEnArchivo();
         UnityEngine.SceneManagement.SceneManager.LoadScene("SeleccionarNiveles" + PlayerPrefs.GetInt("SelectedOption", 1));
+    }
+
+    void CopiarArchivosARutaPersistente()
+    {
+        string[] archivos = { "tiempos.txt" };
+        foreach (string archivo in archivos)
+        {
+            string rutaDestino = Path.Combine(Application.persistentDataPath, archivo);
+            if (!File.Exists(rutaDestino))
+            {
+                TextAsset archivoOriginal = Resources.Load<TextAsset>("Resultados/" + Path.GetFileNameWithoutExtension(archivo));
+                if (archivoOriginal != null)
+                {
+                    File.WriteAllBytes(rutaDestino, archivoOriginal.bytes);
+                }
+                else
+                {
+                    Debug.LogError("No se pudo encontrar el archivo: " + archivo);
+                }
+            }
+        }
     }
 }

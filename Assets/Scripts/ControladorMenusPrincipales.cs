@@ -33,7 +33,6 @@ public class ControladorMenusPrincipales : MonoBehaviour
     private List<string> cursoKeys = new List<string>();
     private float[] tiemposCursos = new float[5]; // Array para almacenar los tiempos de cada curso
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -62,13 +61,16 @@ public class ControladorMenusPrincipales : MonoBehaviour
         }
         optionButtons[0].interactable = true;
 
+        CopiarArchivosARutaPersistente();
         CargarResultadosDesdeArchivo();
-        for(int i = 1; i <= 5; i++)
+        CargarTiemposDesdeArchivo();
+
+        for (int i = 1; i <= 5; i++)
         {
             resultadosCursos[i - 1] = SumarResultadosCurso(i);
-            if(resultadosCursos[i - 1] >= 3500
-            && ComprobarMinimoNivel(i - 1)
-            && i != 5) optionButtons[i].interactable = true;
+            if (resultadosCursos[i - 1] >= 3500
+                && ComprobarMinimoNivel(i - 1)
+                && i != 5) optionButtons[i].interactable = true;
         }
 
         // Asignar eventos a los botones
@@ -84,7 +86,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(resultadosCursos[4] >= 3500 && selectYears.activeSelf)
+        if (resultadosCursos[4] >= 3500 && selectYears.activeSelf)
         {
             foreach (var button in optionButtons)
             {
@@ -127,7 +129,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
 
     void ActivarDesactivarInfoHistoria()
     {
-        if(InfoHistoriaTexto.activeSelf) InfoHistoriaTexto.SetActive(false);
+        if (InfoHistoriaTexto.activeSelf) InfoHistoriaTexto.SetActive(false);
         else InfoHistoriaTexto.SetActive(true);
     }
 
@@ -135,7 +137,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
     {
         // Guardar la opción seleccionada en PlayerPrefs
         PlayerPrefs.SetInt("SelectedOption", option);
-        
+
         // Cargar la siguiente escena
         SceneManager.LoadScene("SeleccionarNiveles" + PlayerPrefs.GetInt("SelectedOption", 1));
     }
@@ -143,8 +145,8 @@ public class ControladorMenusPrincipales : MonoBehaviour
     // Función para cargar los resultados desde un archivo de texto
     public void CargarResultadosDesdeArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/resultados.txt";
-        
+        string filePath = Path.Combine(Application.persistentDataPath, "resultados.txt");
+
         // Verificar si el archivo existe
         if (File.Exists(filePath))
         {
@@ -213,7 +215,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
             selectYears.SetActive(false);
             InfoHistoria.SetActive(false);
         }
-        else if(MejoresTiempos.activeSelf)
+        else if (MejoresTiempos.activeSelf)
         {
             selectGameModes.SetActive(true);
             MejoresTiempos.SetActive(false);
@@ -228,14 +230,14 @@ public class ControladorMenusPrincipales : MonoBehaviour
 
     void RejugarModoHistoria()
     {
-         MatriculaNueva();
+        MatriculaNueva();
         ModoHistoriaTerminado.SetActive(false);
         SceneManager.LoadScene("Menu principal");
     }
 
     public void MatriculaNueva()
     {
-        string filePath = "Assets/Resources/Resultados/resultados.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "resultados.txt");
         using (StreamWriter writer = new StreamWriter(filePath))
         {
             for (int curso = 1; curso <= 5; curso++)
@@ -253,7 +255,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
     // Función para guardar los tiempos de todos los cursos en un archivo de texto
     public void GuardarTiemposEnArchivoMatriculaNueva()
     {
-        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "tiempos.txt");
         using (StreamWriter writer = new StreamWriter(filePath, false)) // Sobrescribe el archivo
         {
             for (int i = 0; i < tiemposCursos.Length; i++)
@@ -267,7 +269,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
     // Función para cargar los tiempos desde un archivo de texto
     public void CargarTiemposDesdeArchivo()
     {
-        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        string filePath = Path.Combine(Application.persistentDataPath, "tiempos.txt");
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -299,13 +301,35 @@ public class ControladorMenusPrincipales : MonoBehaviour
         Debug.Log("Cargando escena contrarreloj...");
     }
 
-    bool ComprobarMinimoNivel(int curso){
+    bool ComprobarMinimoNivel(int curso)
+    {
         for (int i = 1; i <= 7; i++)
         {
             string key = "Curso" + curso + "Nivel" + i;
             int resultadoNivel = PlayerPrefs.GetInt(key, 0);
-            if(resultadoNivel < 500) return false;
+            if (resultadoNivel < 500) return false;
         }
         return true;
+    }
+
+    void CopiarArchivosARutaPersistente()
+    {
+        string[] archivos = { "resultados.txt", "tiempos.txt" };
+        foreach (string archivo in archivos)
+        {
+            string rutaDestino = Path.Combine(Application.persistentDataPath, archivo);
+            if (!File.Exists(rutaDestino))
+            {
+                TextAsset archivoOriginal = Resources.Load<TextAsset>("Resultados/" + Path.GetFileNameWithoutExtension(archivo));
+                if (archivoOriginal != null)
+                {
+                    File.WriteAllBytes(rutaDestino, archivoOriginal.bytes);
+                }
+                else
+                {
+                    Debug.LogError("No se pudo encontrar el archivo: " + archivo);
+                }
+            }
+        }
     }
 }

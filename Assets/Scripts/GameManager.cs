@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Text player2ScoreText;
     public Button undo;
 
-    private float tiempo = 10f;
+    private float tiempo = 180f;
     private bool isTimerRunning = false;
     private bool isGameStarted = false;
     private int player1Score = 0;

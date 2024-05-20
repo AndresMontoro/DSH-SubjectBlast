@@ -1082,9 +1082,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undo: {fileID: 1819917251}
   TitleText: {fileID: 83320779}
-  TotalPointsCourse: {fileID: 579819711}
   AvisoCursoNoSuperado: {fileID: 661649078}
   OkyVolverAlMenu: {fileID: 341777666}
+  UltimoCursoTerminado: {fileID: 0}
+  UltimoCursoTerminadoButton: {fileID: 0}
   courseResultsController: {fileID: 480452386}
 --- !u!1001 &443994734
 PrefabInstance:
@@ -1315,9 +1316,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undo: {fileID: 1819917251}
   TitleText: {fileID: 83320779}
-  TotalPointsCourse: {fileID: 579819711}
   AvisoCursoNoSuperado: {fileID: 661649078}
   OkyVolverAlMenu: {fileID: 341777666}
+  UltimoCursoTerminado: {fileID: 0}
+  UltimoCursoTerminadoButton: {fileID: 0}
   courseResultsController: {fileID: 480452386}
 --- !u!1 &480452384
 GameObject:
@@ -3773,9 +3775,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undo: {fileID: 1819917251}
   TitleText: {fileID: 83320779}
-  TotalPointsCourse: {fileID: 579819711}
   AvisoCursoNoSuperado: {fileID: 661649078}
   OkyVolverAlMenu: {fileID: 341777666}
+  UltimoCursoTerminado: {fileID: 0}
+  UltimoCursoTerminadoButton: {fileID: 0}
   courseResultsController: {fileID: 480452386}
 --- !u!1 &863659504
 GameObject:
@@ -4035,9 +4038,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undo: {fileID: 1819917251}
   TitleText: {fileID: 83320779}
-  TotalPointsCourse: {fileID: 579819711}
   AvisoCursoNoSuperado: {fileID: 661649078}
   OkyVolverAlMenu: {fileID: 341777666}
+  UltimoCursoTerminado: {fileID: 0}
+  UltimoCursoTerminadoButton: {fileID: 0}
   courseResultsController: {fileID: 480452386}
 --- !u!1001 &1025857519
 PrefabInstance:
@@ -4353,9 +4357,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undo: {fileID: 1819917251}
   TitleText: {fileID: 83320779}
-  TotalPointsCourse: {fileID: 579819711}
   AvisoCursoNoSuperado: {fileID: 661649078}
   OkyVolverAlMenu: {fileID: 341777666}
+  UltimoCursoTerminado: {fileID: 0}
+  UltimoCursoTerminadoButton: {fileID: 0}
   courseResultsController: {fileID: 480452386}
 --- !u!1 &1078639204
 GameObject:
@@ -5514,9 +5519,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undo: {fileID: 1819917251}
   TitleText: {fileID: 83320779}
-  TotalPointsCourse: {fileID: 579819711}
   AvisoCursoNoSuperado: {fileID: 661649078}
   OkyVolverAlMenu: {fileID: 341777666}
+  UltimoCursoTerminado: {fileID: 0}
+  UltimoCursoTerminadoButton: {fileID: 0}
   courseResultsController: {fileID: 480452386}
 --- !u!1001 &1886020407
 PrefabInstance:
@@ -7222,9 +7228,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undo: {fileID: 1819917251}
   TitleText: {fileID: 83320779}
-  TotalPointsCourse: {fileID: 579819711}
   AvisoCursoNoSuperado: {fileID: 661649078}
   OkyVolverAlMenu: {fileID: 341777666}
+  UltimoCursoTerminado: {fileID: 0}
+  UltimoCursoTerminadoButton: {fileID: 0}
   courseResultsController: {fileID: 480452386}
 --- !u!1001 &1923327684
 PrefabInstance:
@@ -7536,9 +7543,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undo: {fileID: 1819917251}
   TitleText: {fileID: 83320779}
-  TotalPointsCourse: {fileID: 579819711}
   AvisoCursoNoSuperado: {fileID: 661649078}
   OkyVolverAlMenu: {fileID: 341777666}
+  UltimoCursoTerminado: {fileID: 0}
+  UltimoCursoTerminadoButton: {fileID: 0}
   courseResultsController: {fileID: 480452386}
 --- !u!1 &2026723040
 GameObject:
