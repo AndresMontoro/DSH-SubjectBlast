@@ -41,7 +41,7 @@ public class TimerController : MonoBehaviour
             if (tiemposCursos[cursoActualIndex] <= 0)
             {
                 DetenerTemporizador();
-                timerText.text = "0:00";
+                timerText.text = "00:00";
                 TiempoAgotado.SetActive(true);
             }
             // Actualizar el texto del temporizador
@@ -126,7 +126,7 @@ public class TimerController : MonoBehaviour
         int segundos = Mathf.FloorToInt(tiemposCursos[curso ] % 60);
         if(minutos < 0) minutos = 0;
         if(segundos < 0) segundos = 0;
-        timerText.text = minutos.ToString("0") + ":" + segundos.ToString("00");
+        timerText.text = minutos.ToString("00") + ":" + segundos.ToString("00");
     }
 
     // Llamado cuando el objeto está a punto de ser destruido

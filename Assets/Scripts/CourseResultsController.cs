@@ -134,7 +134,7 @@ public class CourseResultsController : MonoBehaviour
             {
                 if(i == (curso - 1))
                 {
-                    tiemposCursos[i] = 300;
+                    tiemposCursos[i] = 1200;
                 }
                 string key = "Curso" + (i + 1);
                 if(tiemposCursos[i] < 0) tiemposCursos[i] = 0;

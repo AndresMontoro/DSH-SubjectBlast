@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,8 @@ public class SeleccionarNiveles : MonoBehaviour
     public Text TitleText;
     public GameObject AvisoCursoNoSuperado;
     public Button OkyVolverAlMenu;
+    public GameObject UltimoCursoTerminado;
+    public Button UltimoCursoTerminadoButton;
     public CourseResultsController courseResultsController;
 
     void Update()
@@ -60,7 +63,16 @@ public class SeleccionarNiveles : MonoBehaviour
 
         AvisoCursoNoSuperado.SetActive(false);
         undo.onClick.AddListener(GoBack);
+        if(selectedOption == 5) UltimoCursoTerminadoButton.onClick.AddListener(GoBack);
         OkyVolverAlMenu.onClick.AddListener(CallResultsControllerFunction);
+        
+        if((selectedOption == 5
+        && courseResultsController.SumarResultadosCurso(selectedOption) >= 3500
+        && ObtenerTiempoDeCurso(selectedOption) <= 0)
+        || selectedOption == 5 && courseResultsController.SumarResultadosCurso(selectedOption) >= 7000)
+        {
+            UltimoCursoTerminado.SetActive(true);
+        }
     }
 
     void CallResultsControllerFunction()

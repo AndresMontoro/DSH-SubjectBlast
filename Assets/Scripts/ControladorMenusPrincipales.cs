@@ -22,9 +22,14 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public Button InfoHistoriaButton;
     public GameObject InfoHistoriaTexto;
     public Button InfoHistoriaTextoButton;
+    public GameObject ModoHistoriaTerminado;
+    public Button ModoHistoriaTerminadoOkButton;
+    public Button ModoHistoriaTerminadoRejugarButton;
     public Button[] optionButtons; // Array de botones para las opciones
     private float[] resultadosCursos = new float[5]; // Array para almacenar los tiempos de cada curso
     private List<string> cursoKeys = new List<string>();
+    private float[] tiemposCursos = new float[5]; // Array para almacenar los tiempos de cada curso
+
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +40,8 @@ public class ControladorMenusPrincipales : MonoBehaviour
         modoMultijugador.onClick.AddListener(ShowMultiplayer);
         InfoHistoriaButton.onClick.AddListener(ActivarDesactivarInfoHistoria);
         InfoHistoriaTextoButton.onClick.AddListener(ActivarDesactivarInfoHistoria);
+        ModoHistoriaTerminadoOkButton.onClick.AddListener(GoBAckAndDisableInfo);
+        ModoHistoriaTerminadoRejugarButton.onClick.AddListener(RejugarModoHistoria);
         mainMenu.SetActive(true);
         selectGameModes.SetActive(false);
         selectYears.SetActive(false);
@@ -49,12 +56,11 @@ public class ControladorMenusPrincipales : MonoBehaviour
         optionButtons[0].interactable = true;
 
         CargarResultadosDesdeArchivo();
-        for(int i = 1; i < 5; i++)
+        for(int i = 1; i <= 5; i++)
         {
             resultadosCursos[i - 1] = SumarResultadosCurso(i);
-            if(resultadosCursos[i - 1] >= 3500) optionButtons[i].interactable = true;
+            if(resultadosCursos[i - 1] >= 3500 && i != 5) optionButtons[i].interactable = true;
         }
-
 
         // Asignar eventos a los botones
         for (int i = 0; i < optionButtons.Length; i++)
@@ -69,7 +75,14 @@ public class ControladorMenusPrincipales : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(resultadosCursos[4] >= 3500 && selectYears.activeSelf)
+        {
+            foreach (var button in optionButtons)
+            {
+                button.interactable = false;
+            }
+            ModoHistoriaTerminado.SetActive(true);
+        }
     }
 
     void PlayGame()
@@ -183,5 +196,80 @@ public class ControladorMenusPrincipales : MonoBehaviour
             selectGameModes.SetActive(true);
             selectYears.SetActive(false);
         }
+    }
+
+    public void GoBAckAndDisableInfo()
+    {
+        ModoHistoriaTerminado.SetActive(false);
+        GoBack();
+    }
+
+    void RejugarModoHistoria()
+    {
+         MatriculaNueva();
+        ModoHistoriaTerminado.SetActive(false);
+        SceneManager.LoadScene("Menu principal");
+    }
+
+    public void MatriculaNueva()
+    {
+        string filePath = "Assets/Resources/Resultados/resultados.txt";
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            for (int curso = 1; curso <= 5; curso++)
+            {
+                for (int nivel = 1; nivel <= 7; nivel++)
+                {
+                    string key = "Curso" + curso + "Nivel" + nivel;
+                    writer.WriteLine(key + ": " + 0);
+                }
+            }
+        }
+        //CargarTiemposDesdeArchivo();
+        GuardarTiemposEnArchivoMatriculaNueva();
+    }
+
+    // Función para guardar los tiempos de todos los cursos en un archivo de texto
+    public void GuardarTiemposEnArchivoMatriculaNueva()
+    {
+        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        using (StreamWriter writer = new StreamWriter(filePath, false)) // Sobrescribe el archivo
+        {
+            for (int i = 0; i < tiemposCursos.Length; i++)
+            {
+                string key = "Curso" + (i + 1);
+                writer.WriteLine(key + ": " + 1200);
+            }
+        }
+    }
+
+    // Función para cargar los tiempos desde un archivo de texto
+    public void CargarTiemposDesdeArchivo()
+    {
+        string filePath = "Assets/Resources/Resultados/tiempos.txt";
+        if (File.Exists(filePath))
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(':');
+                if (parts.Length == 2)
+                {
+                    string curso = parts[0].Trim();
+                    float tiempo;
+                    if (float.TryParse(parts[1].Trim(), out tiempo))
+                    {
+                        for (int i = 0; i < tiemposCursos.Length; i++)
+                        {
+                            if (curso == "Curso" + (i + 1))
+                            {
+                                tiemposCursos[i] = tiempo;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Debug.Log("Se han cargado los tiempos");
     }
 }

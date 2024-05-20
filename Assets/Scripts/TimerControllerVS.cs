@@ -26,7 +26,7 @@ public class TimerControllerVS : MonoBehaviour
             if (tiempo <= 0)
             {
                 DetenerTemporizador();
-                timerText.text = "0:00";
+                timerText.text = "00:00";
 
             }
             // Actualizar el texto del temporizador
@@ -58,7 +58,7 @@ public class TimerControllerVS : MonoBehaviour
     {
         int minutos = Mathf.FloorToInt(tiempo / 60);
         int segundos = Mathf.FloorToInt(tiempo % 60);
-        timerText.text = minutos.ToString("0") + ":" + segundos.ToString("00");
+        timerText.text = minutos.ToString("00") + ":" + segundos.ToString("00");
         Debug.Log("Se ha actualizado el tiempo a " + timerText.text);
     }
 
