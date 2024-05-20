@@ -13,6 +13,8 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public Button modoMultijugador;
     public Button crearPartida;
     public Button unirsePartida;
+    public Button jugarMejoresTiempos;
+    public Button modoContrarreloj;
 
     public GameObject mainMenu;
     public GameObject selectGameModes;
@@ -23,6 +25,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public GameObject InfoHistoriaTexto;
     public Button InfoHistoriaTextoButton;
     public GameObject ModoHistoriaTerminado;
+    public GameObject MejoresTiempos;
     public Button ModoHistoriaTerminadoOkButton;
     public Button ModoHistoriaTerminadoRejugarButton;
     public Button[] optionButtons; // Array de botones para las opciones
@@ -42,11 +45,15 @@ public class ControladorMenusPrincipales : MonoBehaviour
         InfoHistoriaTextoButton.onClick.AddListener(ActivarDesactivarInfoHistoria);
         ModoHistoriaTerminadoOkButton.onClick.AddListener(GoBAckAndDisableInfo);
         ModoHistoriaTerminadoRejugarButton.onClick.AddListener(RejugarModoHistoria);
+        modoContrarreloj.onClick.AddListener(ShowMejoresTiempos);
+        jugarMejoresTiempos.onClick.AddListener(LoadContrarrelojScene);
+
         mainMenu.SetActive(true);
         selectGameModes.SetActive(false);
         selectYears.SetActive(false);
         undo.gameObject.SetActive(false);
         multiplayer.SetActive(false);
+        MejoresTiempos.SetActive(false);
 
         // Desactivar los botones de opciones
         foreach (var button in optionButtons)
@@ -109,6 +116,13 @@ public class ControladorMenusPrincipales : MonoBehaviour
         SceneManager.LoadScene("Multiplayer");
         /*selectGameModes.SetActive(false);
         multiplayer.SetActive(true);*/
+    }
+
+    public void ShowMejoresTiempos()
+    {
+        Debug.Log("Show Mejores Tiempos");
+        selectGameModes.SetActive(false);
+        MejoresTiempos.SetActive(true);
     }
 
     void ActivarDesactivarInfoHistoria()
@@ -198,6 +212,11 @@ public class ControladorMenusPrincipales : MonoBehaviour
             selectGameModes.SetActive(true);
             selectYears.SetActive(false);
         }
+        else if(MejoresTiempos.activeSelf)
+        {
+            selectGameModes.SetActive(true);
+            MejoresTiempos.SetActive(false);
+        }
     }
 
     public void GoBAckAndDisableInfo()
@@ -272,6 +291,11 @@ public class ControladorMenusPrincipales : MonoBehaviour
             }
         }
         Debug.Log("Se han cargado los tiempos");
+    }
+
+    public void LoadContrarrelojScene()
+    {
+        Debug.Log("Cargando escena contrarreloj...");
     }
 
     bool ComprobarMinimoNivel(int curso){
