@@ -211,6 +211,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         {
             selectGameModes.SetActive(true);
             selectYears.SetActive(false);
+            InfoHistoria.SetActive(false);
         }
         else if(MejoresTiempos.activeSelf)
         {
