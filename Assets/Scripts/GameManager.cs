@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (playerIndex == 1)
         {
             player1Score += increment;
+            Debug.Log("Se aumenta la puntuacion del jugador " + playerIndex + " a " + player1Score + " puntos");
             UpdatePlayerScore(playerIndex, player1Score);
         }
         else if (playerIndex == 2)

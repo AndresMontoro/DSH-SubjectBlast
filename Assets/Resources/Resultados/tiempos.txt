@@ -1,4 +1,5 @@
-Curso1: 877,293
+Curso1: 1200
+Curso1: 1200
 Curso2: 1200
 Curso3: 1200
 Curso4: 1200

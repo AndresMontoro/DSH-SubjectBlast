@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -43,6 +44,7 @@ public class Grid : MonoBehaviour
     public bool playingAnim = false;
 
     public ResultsController resultsController;
+    public GameManager gameManager;
 
     void Start()
     {
@@ -70,6 +72,7 @@ public class Grid : MonoBehaviour
                 SpawnNewPiece(x, z, PieceType.EMPTY);
             }
         }
+        gameManager = FindObjectOfType<GameManager>();
 
         StartCoroutine(Fill());
     }
@@ -384,23 +387,30 @@ public class Grid : MonoBehaviour
             if (pieces[x, z].IsClearable() && !pieces[x, z].ClearableComponent.IsBeingCleared) {
                 pieces[x, z].ClearableComponent.Clear();
                 SpawnNewPiece(x, z, PieceType.EMPTY);
-                if(isFilled) resultsController.SumarPuntos();
+                if(isFilled && SceneManager.GetActiveScene().name == "Contrarreloj") resultsController.SumarPuntos();
+                
+                if (gameManager != null && SceneManager.GetActiveScene().name == "Multijugador" && isFilled)
+                {
+                    // Supongamos que playerIndex es 1 para el jugador local y 2 para el jugador remoto.
+                    int playerIndex = PhotonNetwork.IsMasterClient ? 1 : 2;
+                    gameManager.IncreasePlayerScore(playerIndex, 8);
+                }
 
                 Debug.Log("Limpio en Contrarreloj/Multijugador");
                 return true;
             } 
         } else {
             if (pieces[x, z].IsClearable() && !pieces[x, z].ClearableComponent.IsBeingCleared) {
-            pieces[x, z].ClearableComponent.Clear();
-            SpawnNewPiece(x, z, PieceType.EMPTY);
-            if(isFilled) resultsController.SumarPuntos();
+                pieces[x, z].ClearableComponent.Clear();
+                SpawnNewPiece(x, z, PieceType.EMPTY);
+                if(isFilled) resultsController.SumarPuntos();
 
-            if (Random.value <= 0.03f && isFilled && !playingAnim)
-            {
-                ActivateRandomSpecialGameObject();
-            }
+                if (Random.value <= 0.03f && isFilled && !playingAnim)
+                {
+                    ActivateRandomSpecialGameObject();
+                }
 
-            return true;
+                return true;
             }
         }
         

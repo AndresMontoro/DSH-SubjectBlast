@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SeleccionarNiveles5.unity
     guid: e3294b6c3213bf048aed5d6570bda711
   - enabled: 1
-    path: Assets/Scenes/Multiplayer.unity
-    guid: 4712504a5eaf71543ad5a95ca2f8dce4
+    path: Assets/Scenes/Contrarreloj.unity
+    guid: 961a63b887044994bb1709a6aadf1818
+  - enabled: 1
+    path: Assets/Scenes/Multijugador.unity
+    guid: fb0acdb42fd2f3441b833c931d58adb7
   m_configObjects: {}
