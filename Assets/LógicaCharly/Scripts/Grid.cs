@@ -388,7 +388,12 @@ public class Grid : MonoBehaviour
             if (pieces[x, z].IsClearable() && !pieces[x, z].ClearableComponent.IsBeingCleared) {
                 pieces[x, z].ClearableComponent.Clear();
                 SpawnNewPiece(x, z, PieceType.EMPTY);
-                if(isFilled && SceneManager.GetActiveScene().name == "Contrarreloj") resultsControllerContrarreloj.SumarPuntos();
+                if(isFilled && SceneManager.GetActiveScene().name == "Contrarreloj")
+                {
+                    resultsControllerContrarreloj.SumarPuntos();
+                    //resultsControllerContrarreloj.SumarSegundos();
+                }
+                
                 
                 if (gameManager != null && SceneManager.GetActiveScene().name == "Multijugador" && isFilled)
                 {

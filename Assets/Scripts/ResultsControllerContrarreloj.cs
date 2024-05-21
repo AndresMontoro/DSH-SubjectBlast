@@ -86,6 +86,11 @@ public class ResultsControllerContrarreloj : MonoBehaviour
         totalPointsText.text = Puntos.ToString("0000");
     }
 
+    public void SumarSegundos()
+    {
+        timer += 0.1f;
+    }
+
     public void GuardarResultadoNivel(string nombre, int resultado)
     {
         contrarreloj.GuardarNuevoTiempo(nombre, resultado);
