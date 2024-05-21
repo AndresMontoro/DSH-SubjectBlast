@@ -14,6 +14,10 @@ public class ResultsController : MonoBehaviour
     public int ValorFicha = 6;
     int Points;
 
+    [Header("Reset Tablero")]
+    public Grid grid;
+    public Button reset;
+
     void Start()
     {
         int selectedWeek = PlayerPrefs.GetInt("SelectedWeek", 0);
@@ -21,6 +25,7 @@ public class ResultsController : MonoBehaviour
         Week.text = "Semana " + selectedWeek;
         MaximoPuntosConseguidoButton.onClick.AddListener(GoBack);
         undo.onClick.AddListener(GuardarYSalir);
+        reset.onClick.AddListener(ResetBoard);
 
         // Copiar archivos de recursos a la ruta persistente si es necesario
         CopiarArchivosARutaPersistente();
@@ -163,4 +168,6 @@ public class ResultsController : MonoBehaviour
             }
         }
     }
+
+    void ResetBoard() { grid.ClearBoard(); }
 }

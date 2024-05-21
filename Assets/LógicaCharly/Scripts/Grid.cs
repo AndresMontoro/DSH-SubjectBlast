@@ -429,4 +429,18 @@ public class Grid : MonoBehaviour
             Debug.Log("Activated special game object: " + prefabProfesores[randomIndex].name);
         }
     }
+
+    public void ClearBoard()
+    {
+        for (int x = 0; x < xDim ; x++) {
+            for (int z = 0; z < zDim; z++) {
+                if (pieces[x, z].IsClearable() && !pieces[x, z].ClearableComponent.IsBeingCleared) {
+                    pieces[x, z].ClearableComponent.Clear();
+                    SpawnNewPiece(x, z, PieceType.EMPTY);
+                }
+            }
+        }
+        isFilled = false;
+        StartCoroutine(Fill());
+    }
 }
