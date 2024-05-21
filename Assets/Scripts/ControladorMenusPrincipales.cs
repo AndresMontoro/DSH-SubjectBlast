@@ -26,6 +26,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
     public Button InfoHistoriaTextoButton;
     public GameObject ModoHistoriaTerminado;
     public GameObject MejoresTiempos;
+    public GameObject InputNameContrarreloj;
     public Button ModoHistoriaTerminadoOkButton;
     public Button ModoHistoriaTerminadoRejugarButton;
     public Button[] optionButtons; // Array de botones para las opciones
@@ -45,7 +46,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         ModoHistoriaTerminadoOkButton.onClick.AddListener(GoBAckAndDisableInfo);
         ModoHistoriaTerminadoRejugarButton.onClick.AddListener(RejugarModoHistoria);
         modoContrarreloj.onClick.AddListener(ShowMejoresTiempos);
-        jugarMejoresTiempos.onClick.AddListener(LoadContrarrelojScene);
+        jugarMejoresTiempos.onClick.AddListener(ShowInputNameContrarreloj);
 
         mainMenu.SetActive(true);
         selectGameModes.SetActive(false);
@@ -53,6 +54,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         undo.gameObject.SetActive(false);
         multiplayer.SetActive(false);
         MejoresTiempos.SetActive(false);
+        InputNameContrarreloj.SetActive(false);
 
         // Desactivar los botones de opciones
         foreach (var button in optionButtons)
@@ -125,6 +127,12 @@ public class ControladorMenusPrincipales : MonoBehaviour
         Debug.Log("Show Mejores Tiempos");
         selectGameModes.SetActive(false);
         MejoresTiempos.SetActive(true);
+    }
+
+    public void ShowInputNameContrarreloj()
+    {
+        MejoresTiempos.SetActive(false);
+        InputNameContrarreloj.SetActive(true);
     }
 
     void ActivarDesactivarInfoHistoria()
@@ -219,6 +227,11 @@ public class ControladorMenusPrincipales : MonoBehaviour
         {
             selectGameModes.SetActive(true);
             MejoresTiempos.SetActive(false);
+        }
+        else if (InputNameContrarreloj.activeSelf)
+        {
+            MejoresTiempos.SetActive(true);
+            InputNameContrarreloj.SetActive(false);
         }
     }
 
