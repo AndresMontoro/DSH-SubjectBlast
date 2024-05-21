@@ -69,7 +69,7 @@ public class ControladorMenusPrincipales : MonoBehaviour
         {
             resultadosCursos[i - 1] = SumarResultadosCurso(i);
             if (resultadosCursos[i - 1] >= 3500
-                && ComprobarMinimoNivel(i - 1)
+                && ComprobarMinimoNivel(i)
                 && i != 5) optionButtons[i].interactable = true;
         }
 
