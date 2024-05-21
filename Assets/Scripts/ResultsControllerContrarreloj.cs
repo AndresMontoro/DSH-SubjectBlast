@@ -96,5 +96,5 @@ public class ResultsControllerContrarreloj : MonoBehaviour
         contrarreloj.GuardarNuevoTiempo(nombre, resultado);
     }
 
-    void ResetBoard() { grid.ClearBoard(); }
+    void ResetBoard() { grid.ClearBoard(); Debug.Log("Reseteo");}
 }

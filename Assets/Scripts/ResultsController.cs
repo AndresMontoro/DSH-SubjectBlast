@@ -35,6 +35,7 @@ public class ResultsController : MonoBehaviour
 
     void Update()
     {
+        reset.onClick.AddListener(ResetBoard);
         Points = int.Parse(TotalPointsLevel.text);
         if(Points >= 1000 && SceneManager.GetActiveScene().name != "Contrarreloj" && SceneManager.GetActiveScene().name != "Multijugador")
         {
@@ -169,5 +170,5 @@ public class ResultsController : MonoBehaviour
         }
     }
 
-    void ResetBoard() { grid.ClearBoard(); }
+    void ResetBoard() { Debug.Log("Reseteado"); grid.ClearBoard(); }
 }
