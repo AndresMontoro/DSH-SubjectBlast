@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 27229878}
   - component: {fileID: 27229877}
   m_Layer: 0
-  m_Name: Position
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 136326794}
   - component: {fileID: 136326793}
   m_Layer: 0
-  m_Name: Position
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2103,7 +2103,7 @@ GameObject:
   - component: {fileID: 389589902}
   - component: {fileID: 389589901}
   m_Layer: 0
-  m_Name: Position
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4139,7 +4139,7 @@ GameObject:
   - component: {fileID: 657101403}
   - component: {fileID: 657101402}
   m_Layer: 0
-  m_Name: Position
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4409,7 +4409,7 @@ GameObject:
   - component: {fileID: 761284485}
   - component: {fileID: 761284484}
   m_Layer: 0
-  m_Name: Position
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5795,7 +5795,7 @@ GameObject:
   - component: {fileID: 1184566136}
   - component: {fileID: 1184566135}
   m_Layer: 0
-  m_Name: Position
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7930,7 +7930,7 @@ GameObject:
   - component: {fileID: 1749877338}
   - component: {fileID: 1749877337}
   m_Layer: 0
-  m_Name: Position
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8231,6 +8231,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771219550}
   m_CullTransparentMesh: 1
+--- !u!1 &1781032961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1781032963}
+  - component: {fileID: 1781032962}
+  m_Layer: 0
+  m_Name: Contrarreloj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1781032962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781032961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0daf2fb6e7464c545a349a0026a0026b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textosNombres:
+  - {fileID: 196819908}
+  - {fileID: 748072615}
+  - {fileID: 1808126099}
+  - {fileID: 389589901}
+  - {fileID: 657101402}
+  - {fileID: 1749877337}
+  - {fileID: 27229877}
+  - {fileID: 136326793}
+  - {fileID: 1184566135}
+  - {fileID: 761284484}
+  textosPuntuaciones:
+  - {fileID: 1996996392}
+  - {fileID: 1771219552}
+  - {fileID: 362835105}
+  - {fileID: 1693670689}
+  - {fileID: 1508602602}
+  - {fileID: 308120651}
+  - {fileID: 1710870463}
+  - {fileID: 385765264}
+  - {fileID: 1786355709}
+  - {fileID: 527853336}
+--- !u!4 &1781032963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781032961}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1786355707
 GameObject:
   m_ObjectHideFlags: 0
@@ -8322,7 +8388,7 @@ GameObject:
   - component: {fileID: 1808126100}
   - component: {fileID: 1808126099}
   m_Layer: 0
-  m_Name: Position
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9516,3 +9582,4 @@ SceneRoots:
   - {fileID: 577278176}
   - {fileID: 1941298063}
   - {fileID: 1267201323}
+  - {fileID: 1781032963}
