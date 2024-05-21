@@ -5533,8 +5533,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula justo
-    id purus porta, ut ultricies nunc bibendum.
+  m_Text: "Enfr\xE9ntate a otros jugadores en tiempo real. Compite con tus amigos
+    y demuestra qui\xE9n es el mejor."
 --- !u!222 &974183634
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5886,8 +5886,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula justo
-    id purus porta, ut ultricies nunc bibendum.
+  m_Text: "Desaf\xEDa al tiempo y demuestra tu habilidad bajo presi\xF3n. \xBFEres
+    capaz de superar el record?"
 --- !u!222 &1115488602
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6661,7 +6661,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9ecbbd8d1640aad4f9ff0f8b14fba0c2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 98a83ae1103609f429ec3b3f5c5d48b0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8641,8 +8641,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula justo
-    id purus porta, ut ultricies nunc bibendum.
+  m_Text: "Atr\xE9vete a sacarte la carrera en la ESI, solo los mejores superan el
+    reto. Mucha suerte."
 --- !u!222 &1759628505
 CanvasRenderer:
   m_ObjectHideFlags: 0
