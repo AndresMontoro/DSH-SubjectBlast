@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class Resultado
@@ -25,11 +26,15 @@ public class Contrarreloj : MonoBehaviour
     public List<Text> textosNombres; // Lista de Texts para mostrar los nombres en la escena
     public List<Text> textosPuntuaciones; // Lista de Texts para mostrar las puntuaciones en la escena
 
+    public Button jugarButton;
+    public Text nombreJugador;
+
     void Start()
     {
         InicializarArchivoDeResultados();
         CargarResultadosDesdeArchivo();
         MostrarResultados();
+        jugarButton.onClick.AddListener(LoadScene);
     }
 
     void Update()
@@ -136,14 +141,33 @@ public class Contrarreloj : MonoBehaviour
         {
             if (i < mejoresTiempos.Count)
             {
-                textosNombres[i].text = mejoresTiempos[i].nombre;
-                textosPuntuaciones[i].text = mejoresTiempos[i].puntuacion.ToString();
+                if (i < textosNombres.Count && i < textosPuntuaciones.Count)
+                {
+                    textosNombres[i].text = mejoresTiempos[i].nombre;
+                    textosPuntuaciones[i].text = mejoresTiempos[i].puntuacion.ToString();
+                }
             }
             else
             {
-                textosNombres[i].text = "";
-                textosPuntuaciones[i].text = "";
+                if (i < textosNombres.Count && i < textosPuntuaciones.Count)
+                {
+                    textosNombres[i].text = "";
+                    textosPuntuaciones[i].text = "";
+                }
             }
         }
+    }
+
+    public int MejorResultado()
+    {
+        return mejoresTiempos[1].puntuacion;
+    }
+
+    // Función para cargar la escena de contrarreloj
+
+    void LoadScene()
+    {
+        PlayerPrefs.SetString("NombreJugador", nombreJugador.text);
+        SceneManager.LoadScene("Contrarreloj");
     }
 }

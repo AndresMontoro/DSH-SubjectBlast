@@ -44,6 +44,7 @@ public class Grid : MonoBehaviour
     public bool playingAnim = false;
 
     public ResultsController resultsController;
+    public ResultsControllerContrarreloj resultsControllerContrarreloj;
     public GameManager gameManager;
 
     void Start()
@@ -387,7 +388,7 @@ public class Grid : MonoBehaviour
             if (pieces[x, z].IsClearable() && !pieces[x, z].ClearableComponent.IsBeingCleared) {
                 pieces[x, z].ClearableComponent.Clear();
                 SpawnNewPiece(x, z, PieceType.EMPTY);
-                if(isFilled && SceneManager.GetActiveScene().name == "Contrarreloj") resultsController.SumarPuntos();
+                if(isFilled && SceneManager.GetActiveScene().name == "Contrarreloj") resultsControllerContrarreloj.SumarPuntos();
                 
                 if (gameManager != null && SceneManager.GetActiveScene().name == "Multijugador" && isFilled)
                 {

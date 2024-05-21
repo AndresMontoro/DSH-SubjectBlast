@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "DSH-SubjectBlast.sln"
+    "dotnet.defaultSolution": "DSH-SubjectBlast.sln",
+    "C_Cpp.errorSquiggles": "enabled"
 }
