@@ -1663,6 +1663,7 @@ MonoBehaviour:
   isFilled: 0
   playingAnim: 0
   resultsController: {fileID: 1886562017}
+  gameManager: {fileID: 0}
 --- !u!4 &1487993145
 Transform:
   m_ObjectHideFlags: 0
@@ -1861,7 +1862,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -2137,7 +2138,7 @@ MonoBehaviour:
   MaximoPuntosConseguidoButton: {fileID: 191968586}
   TiempoAgotado: {fileID: 1536005876}
   undo: {fileID: 111214942}
-  ValorFicha: 8
+  ValorFicha: 6
 --- !u!4 &1886562018
 Transform:
   m_ObjectHideFlags: 0

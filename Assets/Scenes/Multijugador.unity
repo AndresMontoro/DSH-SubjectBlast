@@ -3639,7 +3639,7 @@ MonoBehaviour:
   MaximoPuntosConseguidoButton: {fileID: 191968586}
   TiempoAgotado: {fileID: 1536005876}
   undo: {fileID: 0}
-  ValorFicha: 8
+  ValorFicha: 6
 --- !u!4 &1886562018
 Transform:
   m_ObjectHideFlags: 0

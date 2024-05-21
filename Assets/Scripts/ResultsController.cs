@@ -11,7 +11,7 @@ public class ResultsController : MonoBehaviour
     public Button MaximoPuntosConseguidoButton;
     public GameObject TiempoAgotado;
     public Button undo;
-    public int ValorFicha = 8;
+    public int ValorFicha = 6;
     int Points;
 
     void Start()
